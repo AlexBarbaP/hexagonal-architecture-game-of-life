@@ -1,2 +1,4 @@
 /.idea/workspace.xml
+/var/
 /docker-compose.override.yml
+/vendor/

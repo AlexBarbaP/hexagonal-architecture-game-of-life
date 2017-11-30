@@ -1,0 +1,26 @@
+{
+  "name": "alexagile/GameOfLifeHexagonal",
+  "description": "Alex Agile's Hexagonal Architecture Game Of Life Workshop",
+  "type": "project",
+  "authors": [
+    {
+      "name": "Alex Agile",
+      "email": "alexagile@alexagile.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "autoload": {
+    "psr-4": {
+      "": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+    }
+  },
+  "require": {
+    "php": "^7.1"
+  },
+  "require-dev": {
+  }
+}
