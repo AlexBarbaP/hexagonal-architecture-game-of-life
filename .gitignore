@@ -1,4 +1,6 @@
 /.idea/workspace.xml
 /var/
+!/var/coverage/.gitKeep
 /docker-compose.override.yml
 /vendor/
+/phpunit.xml
