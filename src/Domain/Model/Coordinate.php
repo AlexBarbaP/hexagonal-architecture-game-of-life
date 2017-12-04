@@ -7,41 +7,52 @@ use Domain\Exception\InvalidCoordinateException;
 
 final class Coordinate
 {
-	/** @var int */
-	private $x = 0;
+    /** @var int */
+    private $x = 0;
 
-	/** @var int */
-	private $y = 0;
+    /** @var int */
+    private $y = 0;
 
-	/**
-	 * @param int $x
-	 * @param int $y
-	 *
-	 * @throws InvalidCoordinateException
-	 */
-	public function __construct(int $x, int $y)
-	{
-		if ($x < 0 || $y < 0) {
-			throw new InvalidCoordinateException();
-		}
+    /**
+     * @param int $x
+     * @param int $y
+     *
+     * @throws InvalidCoordinateException
+     */
+    public function __construct(int $x, int $y)
+    {
+        if ($x < 0 || $y < 0) {
+            throw new InvalidCoordinateException();
+        }
 
-		$this->x = $x;
-		$this->y = $y;
-	}
+        $this->x = $x;
+        $this->y = $y;
+    }
 
-	/**
-	 * @return int
-	 */
-	public function getX(): int
-	{
-		return $this->x;
-	}
+    /**
+     * @return int
+     */
+    public function getX(): int
+    {
+        return $this->x;
+    }
 
-	/**
-	 * @return int
-	 */
-	public function getY(): int
-	{
-		return $this->y;
-	}
+    /**
+     * @return int
+     */
+    public function getY(): int
+    {
+        return $this->y;
+    }
+
+    /**
+     * @param Coordinate $coordinate
+     *
+     * @return bool
+     */
+    public function equals(Coordinate $coordinate): bool
+    {
+        return $this->getX() === $coordinate->getX()
+            && $this->getY() === $coordinate->getY();
+    }
 }

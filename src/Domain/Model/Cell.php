@@ -7,34 +7,38 @@ use Domain\Exception\InvalidCellEnumException;
 
 final class Cell
 {
-	public const UNPOPULATED = 0;
-	public const POPULATED   = 1;
+    public const UNPOPULATED = 0;
+    public const POPULATED = 1;
 
-	/** @var int */
-	private $value = 0;
+    /** @var CellStatus */
+    private $cellStatus;
 
-	/**
-	 * @param int $value
-	 *
-	 * @throws InvalidCellEnumException
-	 */
-	public function __construct(int $value)
-	{
-		if (
-			$value !== self::UNPOPULATED
-			&& $value !== self::POPULATED
-		) {
-			throw new InvalidCellEnumException();
-		}
+    /** @var Coordinate */
+    private $coordinate;
 
-		$this->value = $value;
-	}
+    /**
+     * @param Coordinate $coordinate
+     * @param CellStatus $cellStatus
+     */
+    public function __construct(Coordinate $coordinate, CellStatus $cellStatus)
+    {
+        $this->coordinate = clone $coordinate;
+        $this->cellStatus = clone $cellStatus;
+    }
 
-	/**
-	 * @return int
-	 */
-	public function __invoke()
-	{
-		return $this->value;
-	}
+    /**
+     * @return Coordinate
+     */
+    public function getCoordinate(): Coordinate
+    {
+        return clone $this->coordinate;
+    }
+
+    /**
+     * @return CellStatus
+     */
+    public function getCellStatus(): CellStatus
+    {
+        return clone $this->cellStatus;
+    }
 }
