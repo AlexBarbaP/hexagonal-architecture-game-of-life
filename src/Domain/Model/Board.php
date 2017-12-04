@@ -5,7 +5,7 @@ namespace Domain\Model;
 
 use Domain\Exception\InvalidCoordinateException;
 use Domain\Exception\InvalidSizeException;
-use Domain\Model\PopulatorStrategies\PopulateStrategyInterface;
+use Domain\Model\PopulateStrategies\PopulateStrategyInterface;
 
 final class Board
 {

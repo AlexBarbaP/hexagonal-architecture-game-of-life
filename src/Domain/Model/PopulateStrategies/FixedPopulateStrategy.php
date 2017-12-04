@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Domain\Model\PopulatorStrategies;
+namespace Domain\Model\PopulateStrategies;
 
 use Domain\Exception\InvalidGridException;
 use Domain\Exception\InvalidSizeException;

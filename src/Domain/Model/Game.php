@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace Domain\Model;
 
-use Domain\Model\PopulatorStrategies\FixedPopulateStrategy;
-use Domain\Model\PopulatorStrategies\PopulateStrategyInterface;
+use Domain\Model\PopulateStrategies\FixedPopulateStrategy;
+use Domain\Model\PopulateStrategies\PopulateStrategyInterface;
 use Domain\Model\Rules\DeadGameRule;
 use Domain\Model\Rules\PopulateGameRule;
 use Domain\Model\Rules\RuleInterface;

@@ -6,7 +6,7 @@ namespace Tests\Domain\Model;
 use Domain\Model\Cell;
 use Domain\Model\Coordinate;
 use Domain\Model\Game;
-use Domain\Model\PopulatorStrategies\FixedPopulateStrategy;
+use Domain\Model\PopulateStrategies\FixedPopulateStrategy;
 use Domain\Model\Size;
 use PHPUnit\Framework\TestCase;
 

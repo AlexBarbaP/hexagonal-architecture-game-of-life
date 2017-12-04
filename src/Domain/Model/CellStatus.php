@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Domain\Model;
 
-use Domain\Exception\InvalidCellEnumException;
+use Domain\Exception\InvalidCellStatusEnumException;
 
 final class CellStatus
 {
@@ -16,7 +16,7 @@ final class CellStatus
     /**
      * @param int $value
      *
-     * @throws InvalidCellEnumException
+     * @throws InvalidCellStatusEnumException
      */
     public function __construct(int $value)
     {
@@ -24,7 +24,7 @@ final class CellStatus
             $value !== self::UNPOPULATED
             && $value !== self::POPULATED
         ) {
-            throw new InvalidCellEnumException();
+            throw new InvalidCellStatusEnumException();
         }
 
         $this->value = $value;

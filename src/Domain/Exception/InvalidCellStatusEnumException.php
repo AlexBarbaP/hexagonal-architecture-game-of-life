@@ -5,6 +5,6 @@ namespace Domain\Exception;
 
 use Exception;
 
-final class InvalidCellEnumException extends Exception
+final class InvalidCellStatusEnumException extends Exception
 {
 }
