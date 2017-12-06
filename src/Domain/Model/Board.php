@@ -80,6 +80,27 @@ final class Board
     }
 
     /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        $gridArray = [];
+
+        foreach ($this->getGrid() as $row) {
+            $gridArray[] = [];
+
+            /** @var Cell $cell */
+            foreach ($row as &$cell) {
+                $cellStatus = $cell->getCellStatus();
+
+                $gridArray[count($gridArray) - 1][] = $cellStatus();
+            }
+        }
+
+        return $gridArray;
+    }
+
+    /**
      * @param Size $size
      *
      * @return array
