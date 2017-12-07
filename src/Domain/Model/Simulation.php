@@ -3,8 +3,12 @@ declare(strict_types=1);
 
 namespace Domain\Model;
 
+use Domain\Model\Entities\GameStatus;
+use Domain\Model\Entities\GameStatusId;
 use Domain\Model\PopulateStrategies\FixedPopulateStrategy;
 use Domain\Model\PopulateStrategies\PopulateStrategyInterface;
+use Domain\Model\Ports\GameStatusRepositoryInterface;
+use Domain\Model\Ports\GameStatusStoreInterface;
 use Domain\Model\Rules\DeadSimulationRule;
 use Domain\Model\Rules\PopulateSimulationRule;
 use Domain\Model\Rules\RuleInterface;
@@ -18,15 +22,53 @@ final class Simulation
     /** @var RuleInterface[] */
     private $rules;
 
+    /** @var GameStatusRepositoryInterface */
+    private $gameStatusRepository;
+
+    /** @var GameStatusStoreInterface */
+    private $gameStatusStore;
+
     /**
-     * @param Size                      $size
+     * @param Size $size
      * @param PopulateStrategyInterface $populateStrategy
      */
-    public function __construct(Size $size, PopulateStrategyInterface $populateStrategy)
-    {
+    public function __construct(
+        Size $size,
+        PopulateStrategyInterface $populateStrategy,
+        GameStatusRepositoryInterface $gameStatusRepository,
+        GameStatusStoreInterface $gameStatusStore
+    ) {
+        $this->gameStatusRepository = $gameStatusRepository;
+        $this->gameStatusStore      = $gameStatusStore;
+
         $this->board = new Board($size, $populateStrategy);
 
         $this->addRules();
+
+        $this->storeInitialGameStatus();
+    }
+
+    /**
+     *
+     */
+    private function addRules(): void
+    {
+        $this->rules[] = new DeadSimulationRule();
+        $this->rules[] = new SurvivalSimulationRule();
+        $this->rules[] = new PopulateSimulationRule();
+    }
+
+    /**
+     *
+     */
+    private function storeInitialGameStatus(): void
+    {
+        $gameStatusId = GameStatusId::create();
+        $status       = serialize($this->board->toArray());
+
+        $gameStatus = new GameStatus($gameStatusId, $status);
+
+        $this->gameStatusStore->save($gameStatus);
     }
 
     /**
@@ -39,34 +81,6 @@ final class Simulation
         $fixedPopulateStrategy = new FixedPopulateStrategy($newGrid);
 
         $this->board = new Board($this->board->getSize(), $fixedPopulateStrategy);
-    }
-
-    /**
-     * @return bool
-     */
-    public function isCompleted(): bool
-    {
-        $anyPopulatedCell = $this->getBoard()->isAnyPopulatedCell();
-
-        return !$anyPopulatedCell;
-    }
-
-    /**
-     * @return Board
-     */
-    public function getBoard(): Board
-    {
-        return $this->board;
-    }
-
-    /**
-     *
-     */
-    private function addRules(): void
-    {
-        $this->rules[] = new DeadSimulationRule();
-        $this->rules[] = new SurvivalSimulationRule();
-        $this->rules[] = new PopulateSimulationRule();
     }
 
     /**
@@ -110,7 +124,7 @@ final class Simulation
 
     /**
      * @param CellStatus $cellStatus
-     * @param int        $cellNeighbors
+     * @param int $cellNeighbors
      *
      * @return CellStatus
      */
@@ -125,5 +139,23 @@ final class Simulation
         }
 
         return $cellStatus;
+    }
+
+    /**
+     * @return Board
+     */
+    public function getBoard(): Board
+    {
+        return $this->board;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCompleted(): bool
+    {
+        $anyPopulatedCell = $this->getBoard()->isAnyPopulatedCell();
+
+        return !$anyPopulatedCell;
     }
 }

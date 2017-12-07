@@ -5,7 +5,6 @@ namespace Domain\Model;
 
 use Domain\Exception\InvalidSizeException;
 use Domain\Model\PopulateStrategies\PopulateStrategyInterface;
-use Throwable;
 
 final class Board
 {
