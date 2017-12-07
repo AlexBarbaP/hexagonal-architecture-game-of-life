@@ -3,12 +3,12 @@ declare(strict_types=1);
 
 namespace Application\Factories;
 
-use Application\CommandHandlers\Game\InitializeGameCommandHandler;
-use Application\CommandHandlers\Game\IterateGameCommandHandler;
-use Application\Commands\Game\InitializeGameCommand;
-use Application\Commands\Game\IterateGameCommand;
-use Application\Queries\Game\GameStatusQuery;
-use Application\QueryHandlers\Game\GameStatusQueryHandler;
+use Application\CommandHandlers\Simulation\InitializeSimulationCommandHandler;
+use Application\CommandHandlers\Simulation\IterateSimulationCommandHandler;
+use Application\Commands\Simulation\InitializeSimulationCommand;
+use Application\Commands\Simulation\IterateSimulationCommand;
+use Application\Queries\Simulation\SimulationStatusQuery;
+use Application\QueryHandlers\Simulation\SimulationStatusQueryHandler;
 use League\Tactician\CommandBus;
 use League\Tactician\Handler\CommandHandlerMiddleware;
 use League\Tactician\Handler\CommandNameExtractor\ClassNameExtractor;
@@ -27,14 +27,14 @@ class CommandBusFactory
         $inflector = new HandleInflector();
 
         // register commands
-        $initializeGameCommandHandler = new InitializeGameCommandHandler();
-        $iterateGameCommandHandler    = new IterateGameCommandHandler();
-        $gameStatusQueryHandler       = new GameStatusQueryHandler();
+        $initializeSimulationCommandHandler = new InitializeSimulationCommandHandler();
+        $iterateSimulationCommandHandler    = new IterateSimulationCommandHandler();
+        $simulationStatusQueryHandler       = new SimulationStatusQueryHandler();
 
         $locator = new InMemoryLocator();
-        $locator->addHandler($initializeGameCommandHandler, InitializeGameCommand::class);
-        $locator->addHandler($iterateGameCommandHandler, IterateGameCommand::class);
-        $locator->addHandler($gameStatusQueryHandler, GameStatusQuery::class);
+        $locator->addHandler($initializeSimulationCommandHandler, InitializeSimulationCommand::class);
+        $locator->addHandler($iterateSimulationCommandHandler, IterateSimulationCommand::class);
+        $locator->addHandler($simulationStatusQueryHandler, SimulationStatusQuery::class);
 
         $commandHandlerMiddleware = new CommandHandlerMiddleware($nameExtractor, $locator, $inflector);
 

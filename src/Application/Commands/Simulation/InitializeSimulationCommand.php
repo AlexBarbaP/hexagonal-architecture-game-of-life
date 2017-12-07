@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Application\Commands\Game;
+namespace Application\Commands\Simulation;
 
 use Domain\Model\PopulateStrategies\PopulateStrategyInterface;
 
-class InitializeGameCommand
+class InitializeSimulationCommand
 {
     /** @var int */
     private $height = 0;

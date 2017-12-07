@@ -3,21 +3,20 @@ declare(strict_types=1);
 
 namespace Application;
 
-use Application\Commands\Game\InitializeGameCommand;
-use Application\Commands\Game\IterateGameCommand;
+use Application\Commands\Simulation\InitializeSimulationCommand;
+use Application\Commands\Simulation\IterateSimulationCommand;
 use Application\Exceptions\InvalidInputException;
 use Application\Factories\CommandBusFactory;
-use Application\Queries\Game\GameStatusQuery;
+use Application\Queries\Simulation\SimulationStatusQuery;
 use Domain\Model\Board;
-use Domain\Model\Game;
+use Domain\Model\Simulation;
 use Domain\Model\PopulateStrategies\RandomPopulateStrategy;
 use Domain\Model\Size;
 use League\Tactician\CommandBus;
+use PHPUnit\Runner\Exception;
 
 class Application
 {
-    const MAX_ITERATIONS = 100;
-
     /** @var InputParserInterface */
     private $inputParser;
 
@@ -30,17 +29,20 @@ class Application
     /** @var int */
     private $iterations;
 
+    /** @var int */
+    private $currentIteration = 0;
+
     /** @var CommandBus */
     private $commandBus;
 
-    /** @var string */
-    private $output;
+    /** @var Simulation */
+    private $simulation;
 
     /**
-     * @param InputParserInterface  $inputParser
-     * @param ValidatorInterface    $inputValidator
+     * @param InputParserInterface $inputParser
      * @param OutputParserInterface $outputParser
-     * @param int                   $iterations
+     * @param ValidatorInterface $inputValidator
+     * @param int $iterations
      */
     public function __construct(
         InputParserInterface $inputParser,
@@ -51,7 +53,7 @@ class Application
         $this->inputParser    = $inputParser;
         $this->outputParser   = $outputParser;
         $this->inputValidator = $inputValidator;
-        $this->iterations     = $iterations ?: self::MAX_ITERATIONS;
+        $this->iterations     = $iterations;
 
         $this->commandBus = $this->getCommandBus();
     }
@@ -59,36 +61,68 @@ class Application
     /**
      * @param string $height
      * @param string $width
-     *
-     * @return array|string
      */
-    public function run(string $height, string $width)
+    public function init(string $height, string $width): void
     {
         try {
             $input = [
                 'height' => $height,
-                'width'  => $width,
+                'width' => $width,
             ];
 
             $this->inputValidator->validate($input);
 
             $size = $this->inputParser->parse($input);
 
-            $this->output .= $this->iterateGame($size);
-
-
-
-            $gameStatusQuery = new GameStatusQuery($game);
-
-            /** @var Board $board */
-            $board = $this->commandBus->handle($gameStatusQuery);
-
-            $gameBoardGrid = $this->outputParser->parse($board);
-
-            return $gameBoardGrid;
+            $this->simulation = $this->initializeSimulation($size);
         } catch (InvalidInputException $e) {
-            return 'Invalid grid size';
+            throw new Exception('Invalid input exception.');
         }
+    }
+
+    /**
+     *
+     */
+    public function iterate(): void
+    {
+        $iterateSimulationCommand = new IterateSimulationCommand($this->simulation);
+
+        $this->simulation = $this->commandBus->handle($iterateSimulationCommand);
+
+        $this->currentIteration++;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSimulationCompleted(): bool
+    {
+        if ($this->simulation->isCompleted()) {
+            return true;
+        }
+
+        $allIterationsCompleted = $this->currentIteration > $this->iterations - 1;
+
+        if ($this->iterations && $allIterationsCompleted) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBoardStatus(): string
+    {
+        $simulationStatusQuery = new SimulationStatusQuery($this->simulation);
+
+        /** @var Board $board */
+        $board = $this->commandBus->handle($simulationStatusQuery);
+
+        $simulationBoardGrid = $this->outputParser->parse($board);
+
+        return $simulationBoardGrid;
     }
 
     /**
@@ -104,49 +138,18 @@ class Application
     }
 
     /**
-     * @param $size
+     * @param Size $size
      *
-     * @return Game
+     * @return Simulation
      */
-    private function initializeGame($size): Game
+    private function initializeSimulation(Size $size): Simulation
     {
         $randomPopulateStrategy = new RandomPopulateStrategy();
 
-        $initializeGameCommand = new InitializeGameCommand($size->getHeight(), $size->getWidth(), $randomPopulateStrategy);
+        $initializeSimulationCommand = new InitializeSimulationCommand($size->getHeight(), $size->getWidth(), $randomPopulateStrategy);
 
-        $game = $this->commandBus->handle($initializeGameCommand);
+        $simulation = $this->commandBus->handle($initializeSimulationCommand);
 
-        return $game;
-    }
-
-    private function iterateGame(Size $size)
-    {
-        $game = $this->initializeGame($size);
-
-        for ($n = 0; $n < $this->iterations; $n++) {
-            $gameBoardStatus = $game->getBoard()->toArray();
-
-            $iterateGameCommand = new IterateGameCommand($gameBoardStatus);
-
-            $game = $this->commandBus->handle($iterateGameCommand);
-        }
-
-    }
-
-    /**
-     * @param Game $game
-     *
-     * @return array
-     */
-    private function getGameOutput(Game $game)
-    {
-        $gameStatusQuery = new GameStatusQuery($game);
-
-        /** @var Board $board */
-        $board = $this->commandBus->handle($gameStatusQuery);
-
-        $gameBoardGrid = $this->outputParser->parse($board);
-
-        return $gameBoardGrid;
+        return $simulation;
     }
 }

@@ -10,8 +10,21 @@ class OutputParser implements OutputParserInterface
     /**
      * @inheritdoc
      */
-    public function parse(Board $board): array
+    public function parse(Board $board): string
     {
-        return $board->toArray();
+        $boardGrid = $board->toArray();
+
+        $output = '';
+
+        foreach ($boardGrid as $row) {
+            $output .= implode(' ', array_map(
+                        function ($element) {
+                            return $element ?: ' ';
+
+                        }, $row)
+                ) . "\n";
+        }
+
+        return $output;
     }
 }

@@ -2,14 +2,14 @@
 <project version="4">
   <component name="PhpInterpreters">
     <interpreters>
-      <interpreter home="docker://gameoflifehexagonalarchitectureworkshop_cli:latest/php" id="9f7b71d7-36ca-4789-957c-f722ccf3d469" name="gameoflifehexagonalarchitectureworkshop_cli:latest" debugger_id="php.debugger.XDebug">
-        <remote_data DOCKER_ACCOUNT_NAME="Docker" DOCKER_IMAGE_NAME="gameoflifehexagonalarchitectureworkshop_cli:latest" DOCKER_REMOTE_PROJECT_PATH="/opt/project" INTERPRETER_PATH="php" HELPERS_PATH="/opt/.phpstorm_helpers" INITIALIZED="false" VALID="true" />
+      <interpreter home="docker://hexagonalarchitecturegameoflife_cli:latest/php" id="5949dfde-a7b3-4fd9-89b1-c1df5fda10cb" name="hexagonalarchitecturegameoflife_cli:latest" debugger_id="php.debugger.XDebug">
+        <remote_data DOCKER_ACCOUNT_NAME="Docker" DOCKER_IMAGE_NAME="hexagonalarchitecturegameoflife_cli:latest" DOCKER_REMOTE_PROJECT_PATH="/opt/project" INTERPRETER_PATH="php" HELPERS_PATH="/opt/.phpstorm_helpers" INITIALIZED="false" VALID="true" />
       </interpreter>
     </interpreters>
   </component>
   <component name="PhpInterpretersPhpInfoCache">
     <phpInfoCache>
-      <interpreter name="gameoflifehexagonalarchitectureworkshop_cli:latest">
+      <interpreter name="hexagonalarchitecturegameoflife_cli:latest">
         <phpinfo binary_type="PHP" php_cli="/usr/local/bin/php" path_separator=":" version="7.1.2">
           <additional_php_ini>/usr/local/etc/php/conf.d/docker-php-ext-apcu.ini, /usr/local/etc/php/conf.d/docker-php-ext-gd.ini, /usr/local/etc/php/conf.d/docker-php-ext-mcrypt.ini, /usr/local/etc/php/conf.d/docker-php-ext-memcached.ini, /usr/local/etc/php/conf.d/docker-php-ext-pdo_mysql.ini, /usr/local/etc/php/conf.d/docker-php-ext-redis.ini, /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini, /usr/local/etc/php/conf.d/docker-php-ext-zip.ini</additional_php_ini>
           <configuration_file />

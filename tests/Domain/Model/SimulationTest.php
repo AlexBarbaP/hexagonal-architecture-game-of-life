@@ -5,12 +5,12 @@ namespace Tests\Domain\Model;
 
 use Domain\Model\Cell;
 use Domain\Model\Coordinate;
-use Domain\Model\Game;
+use Domain\Model\Simulation;
 use Domain\Model\PopulateStrategies\FixedPopulateStrategy;
 use Domain\Model\Size;
 use PHPUnit\Framework\TestCase;
 
-class GameTest extends TestCase
+class SimulationTest extends TestCase
 {
     /**
      * @test
@@ -395,11 +395,11 @@ class GameTest extends TestCase
     {
         $fixedPopulateStrategy = new FixedPopulateStrategy($grid);
 
-        $game = new Game($size, $fixedPopulateStrategy);
+        $simulation = new Simulation($size, $fixedPopulateStrategy);
 
-        $game->iterate();
+        $simulation->iterate();
 
-        $cellNewStatus = $game->getBoard()->getCell($coordinate)->getCellStatus();
+        $cellNewStatus = $simulation->getBoard()->getCell($coordinate)->getCellStatus();
 
         return $cellNewStatus();
     }

@@ -3,6 +3,22 @@
   <component name="PhpDockerContainerSettings">
     <list>
       <map>
+        <entry key="5949dfde-a7b3-4fd9-89b1-c1df5fda10cb">
+          <value>
+            <DockerContainerSettings>
+              <option name="networkMode" value="hexagonalarchitecturegameoflife_simulation_of_life_hexagonal-network" />
+              <option name="version" value="1" />
+              <option name="volumeBindings">
+                <list>
+                  <DockerVolumeBindingImpl>
+                    <option name="containerPath" value="/var/www" />
+                    <option name="hostPath" value="$PROJECT_DIR$" />
+                  </DockerVolumeBindingImpl>
+                </list>
+              </option>
+            </DockerContainerSettings>
+          </value>
+        </entry>
         <entry key="9f7b71d7-36ca-4789-957c-f722ccf3d469">
           <value>
             <DockerContainerSettings>

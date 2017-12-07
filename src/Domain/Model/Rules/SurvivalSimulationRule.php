@@ -5,7 +5,7 @@ namespace Domain\Model\Rules;
 
 use Domain\Model\CellStatus;
 
-final class PopulateGameRule implements RuleInterface
+final class SurvivalSimulationRule implements RuleInterface
 {
     /**
      * @param CellStatus $cellStatus
@@ -16,8 +16,11 @@ final class PopulateGameRule implements RuleInterface
     public function match(CellStatus $cellStatus, int $neighborCount): bool
     {
         if (
-            $cellStatus() == CellStatus::UNPOPULATED
-            && $neighborCount == 3
+            $cellStatus() == CellStatus::POPULATED
+            && (
+                $neighborCount == 2
+                || $neighborCount == 3
+            )
         ) {
             return true;
         }

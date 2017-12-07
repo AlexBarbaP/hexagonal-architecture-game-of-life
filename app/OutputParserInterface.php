@@ -12,7 +12,7 @@ interface OutputParserInterface
      *
      * @param Board $board
      *
-     * @return array
+     * @return string
      */
-    public function parse(Board $board): array;
+    public function parse(Board $board): string;
 }

@@ -8,7 +8,7 @@ use Domain\Model\CellStatus;
 interface RuleInterface
 {
     /**
-     * Matches if cell conditions satisfy game rule
+     * Matches if cell conditions satisfy simulation rule
      *
      * @param CellStatus $cellStatus
      * @param int        $neighborCount
@@ -18,7 +18,7 @@ interface RuleInterface
     public function match(CellStatus $cellStatus, int $neighborCount): bool;
 
     /**
-     * Returns new CellStatus based on game rule
+     * Returns new CellStatus based on simulation rule
      *
      * @return CellStatus
      */

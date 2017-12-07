@@ -5,12 +5,12 @@ namespace Domain\Model;
 
 use Domain\Model\PopulateStrategies\FixedPopulateStrategy;
 use Domain\Model\PopulateStrategies\PopulateStrategyInterface;
-use Domain\Model\Rules\DeadGameRule;
-use Domain\Model\Rules\PopulateGameRule;
+use Domain\Model\Rules\DeadSimulationRule;
+use Domain\Model\Rules\PopulateSimulationRule;
 use Domain\Model\Rules\RuleInterface;
-use Domain\Model\Rules\SurvivalGameRule;
+use Domain\Model\Rules\SurvivalSimulationRule;
 
-final class Game
+final class Simulation
 {
     /** @var Board */
     private $board;
@@ -20,11 +20,11 @@ final class Game
 
     /**
      * @param Size                      $size
-     * @param PopulateStrategyInterface $populatorStrategy
+     * @param PopulateStrategyInterface $populateStrategy
      */
-    public function __construct(Size $size, PopulateStrategyInterface $populatorStrategy)
+    public function __construct(Size $size, PopulateStrategyInterface $populateStrategy)
     {
-        $this->board = new Board($size, $populatorStrategy);
+        $this->board = new Board($size, $populateStrategy);
 
         $this->addRules();
     }
@@ -42,6 +42,16 @@ final class Game
     }
 
     /**
+     * @return bool
+     */
+    public function isCompleted(): bool
+    {
+        $anyPopulatedCell = $this->getBoard()->isAnyPopulatedCell();
+
+        return !$anyPopulatedCell;
+    }
+
+    /**
      * @return Board
      */
     public function getBoard(): Board
@@ -54,9 +64,9 @@ final class Game
      */
     private function addRules(): void
     {
-        $this->rules[] = new DeadGameRule();
-        $this->rules[] = new SurvivalGameRule();
-        $this->rules[] = new PopulateGameRule();
+        $this->rules[] = new DeadSimulationRule();
+        $this->rules[] = new SurvivalSimulationRule();
+        $this->rules[] = new PopulateSimulationRule();
     }
 
     /**
@@ -89,11 +99,11 @@ final class Game
      */
     private function getNextIterationCellStatus(Cell $cell): CellStatus
     {
-        $currentCellStatus = $cell->getCellStatus();
+        $cellCurrentStatus = $cell->getCellStatus();
 
-        $currentCellNeighbors = $this->board->getNeighbors($cell->getCoordinate());
+        $cellNeighbors = $this->board->getNeighbors($cell->getCoordinate());
 
-        $newCellStatus = $this->executeRules($currentCellStatus, $currentCellNeighbors);
+        $newCellStatus = $this->executeRules($cellCurrentStatus, $cellNeighbors);
 
         return $newCellStatus;
     }
