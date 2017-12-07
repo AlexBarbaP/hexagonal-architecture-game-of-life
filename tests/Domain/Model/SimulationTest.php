@@ -5,8 +5,8 @@ namespace Tests\Domain\Model;
 
 use Domain\Model\Cell;
 use Domain\Model\Coordinate;
-use Domain\Model\Simulation;
 use Domain\Model\PopulateStrategies\FixedPopulateStrategy;
+use Domain\Model\Simulation;
 use Domain\Model\Size;
 use PHPUnit\Framework\TestCase;
 
@@ -29,18 +29,18 @@ class SimulationTest extends TestCase
     public function solitudeUseCaseDataProvider()
     {
         return [
-            'Size two, neighbors zero'   => [
+            'Size two, neighbors zero' => [
                 [
-                    'grid'        => [
+                    'grid' => [
                         [1, 0],
                         [0, 0],
                     ],
                     'coordinates' => [0, 0],
                 ],
             ],
-            'Size two, neighbors one'    => [
+            'Size two, neighbors one' => [
                 [
-                    'grid'        => [
+                    'grid' => [
                         [1, 0],
                         [0, 1],
                     ],
@@ -49,7 +49,7 @@ class SimulationTest extends TestCase
             ],
             'Size three, neighbors zero' => [
                 [
-                    'grid'        => [
+                    'grid' => [
                         [0, 0, 0],
                         [0, 1, 0],
                         [0, 0, 0],
@@ -57,9 +57,9 @@ class SimulationTest extends TestCase
                     'coordinates' => [1, 1],
                 ],
             ],
-            'Size three, neighbors one'  => [
+            'Size three, neighbors one' => [
                 [
-                    'grid'        => [
+                    'grid' => [
                         [0, 0, 1],
                         [0, 1, 0],
                         [0, 0, 0],
@@ -87,27 +87,27 @@ class SimulationTest extends TestCase
     public function equilibriumUseCaseDataProvider()
     {
         return [
-            'Size two, neighbors two'     => [
+            'Size two, neighbors two' => [
                 [
-                    'grid'        => [
+                    'grid' => [
                         [1, 1],
                         [1, 0],
                     ],
                     'coordinates' => [0, 0],
                 ],
             ],
-            'Size two, neighbors three'   => [
+            'Size two, neighbors three' => [
                 [
-                    'grid'        => [
+                    'grid' => [
                         [1, 1],
                         [1, 1],
                     ],
                     'coordinates' => [0, 0],
                 ],
             ],
-            'Size three, neighbors two'   => [
+            'Size three, neighbors two' => [
                 [
-                    'grid'        => [
+                    'grid' => [
                         [0, 1, 0],
                         [0, 1, 0],
                         [0, 1, 0],
@@ -117,7 +117,7 @@ class SimulationTest extends TestCase
             ],
             'Size three, neighbors three' => [
                 [
-                    'grid'        => [
+                    'grid' => [
                         [0, 1, 0],
                         [0, 1, 1],
                         [0, 1, 0],
@@ -145,9 +145,9 @@ class SimulationTest extends TestCase
     public function overpopulationUseCaseDataProvider()
     {
         return [
-            'Size three, neighbors four'  => [
+            'Size three, neighbors four' => [
                 [
-                    'grid'        => [
+                    'grid' => [
                         [1, 0, 1],
                         [0, 1, 0],
                         [1, 0, 1],
@@ -155,9 +155,9 @@ class SimulationTest extends TestCase
                     'coordinates' => [1, 1],
                 ],
             ],
-            'Size three, neighbors five'  => [
+            'Size three, neighbors five' => [
                 [
-                    'grid'        => [
+                    'grid' => [
                         [1, 1, 1],
                         [0, 1, 0],
                         [1, 1, 0],
@@ -165,9 +165,9 @@ class SimulationTest extends TestCase
                     'coordinates' => [1, 1],
                 ],
             ],
-            'Size three, neighbors six'   => [
+            'Size three, neighbors six' => [
                 [
-                    'grid'        => [
+                    'grid' => [
                         [1, 1, 1],
                         [0, 1, 1],
                         [1, 1, 0],
@@ -177,7 +177,7 @@ class SimulationTest extends TestCase
             ],
             'Size three, neighbors seven' => [
                 [
-                    'grid'        => [
+                    'grid' => [
                         [1, 1, 1],
                         [1, 1, 1],
                         [1, 1, 0],
@@ -187,7 +187,7 @@ class SimulationTest extends TestCase
             ],
             'Size three, neighbors eight' => [
                 [
-                    'grid'        => [
+                    'grid' => [
                         [1, 1, 1],
                         [1, 1, 1],
                         [1, 1, 1],
@@ -215,9 +215,9 @@ class SimulationTest extends TestCase
     public function becomingPopulatedUseCaseDataProvider()
     {
         return [
-            'Size two, neighbors three'   => [
+            'Size two, neighbors three' => [
                 [
-                    'grid'        => [
+                    'grid' => [
                         [0, 1],
                         [1, 1],
                     ],
@@ -226,7 +226,7 @@ class SimulationTest extends TestCase
             ],
             'Size three, neighbors three' => [
                 [
-                    'grid'        => [
+                    'grid' => [
                         [0, 1, 0],
                         [1, 1, 0],
                         [0, 0, 1],
@@ -254,36 +254,36 @@ class SimulationTest extends TestCase
     public function stayingUnpopulatedUseCaseDataProvider()
     {
         return [
-            'Size two, neighbors zero'    => [
+            'Size two, neighbors zero' => [
                 [
-                    'grid'        => [
+                    'grid' => [
                         [0, 0],
                         [0, 0],
                     ],
                     'coordinates' => [0, 0],
                 ],
             ],
-            'Size two, neighbors one'     => [
+            'Size two, neighbors one' => [
                 [
-                    'grid'        => [
+                    'grid' => [
                         [0, 1],
                         [0, 0],
                     ],
                     'coordinates' => [0, 0],
                 ],
             ],
-            'Size two, neighbors two'     => [
+            'Size two, neighbors two' => [
                 [
-                    'grid'        => [
+                    'grid' => [
                         [0, 1],
                         [1, 0],
                     ],
                     'coordinates' => [0, 0],
                 ],
             ],
-            'Size three, neighbors zero'  => [
+            'Size three, neighbors zero' => [
                 [
-                    'grid'        => [
+                    'grid' => [
                         [0, 0, 0],
                         [0, 0, 0],
                         [0, 0, 0],
@@ -291,9 +291,9 @@ class SimulationTest extends TestCase
                     'coordinates' => [1, 1],
                 ],
             ],
-            'Size three, neighbors one'   => [
+            'Size three, neighbors one' => [
                 [
-                    'grid'        => [
+                    'grid' => [
                         [1, 0, 0],
                         [0, 0, 0],
                         [0, 0, 0],
@@ -301,9 +301,9 @@ class SimulationTest extends TestCase
                     'coordinates' => [1, 1],
                 ],
             ],
-            'Size three, neighbors two'   => [
+            'Size three, neighbors two' => [
                 [
-                    'grid'        => [
+                    'grid' => [
                         [1, 1, 0],
                         [0, 0, 0],
                         [0, 0, 0],
@@ -311,9 +311,9 @@ class SimulationTest extends TestCase
                     'coordinates' => [1, 1],
                 ],
             ],
-            'Size three, neighbors four'  => [
+            'Size three, neighbors four' => [
                 [
-                    'grid'        => [
+                    'grid' => [
                         [1, 1, 1],
                         [1, 0, 0],
                         [0, 0, 0],
@@ -321,9 +321,9 @@ class SimulationTest extends TestCase
                     'coordinates' => [1, 1],
                 ],
             ],
-            'Size three, neighbors five'  => [
+            'Size three, neighbors five' => [
                 [
-                    'grid'        => [
+                    'grid' => [
                         [1, 1, 1],
                         [1, 0, 1],
                         [0, 0, 0],
@@ -331,9 +331,9 @@ class SimulationTest extends TestCase
                     'coordinates' => [1, 1],
                 ],
             ],
-            'Size three, neighbors six'   => [
+            'Size three, neighbors six' => [
                 [
-                    'grid'        => [
+                    'grid' => [
                         [1, 1, 1],
                         [1, 0, 1],
                         [1, 0, 0],
@@ -343,7 +343,7 @@ class SimulationTest extends TestCase
             ],
             'Size three, neighbors seven' => [
                 [
-                    'grid'        => [
+                    'grid' => [
                         [1, 1, 1],
                         [1, 0, 1],
                         [1, 1, 0],
@@ -353,7 +353,7 @@ class SimulationTest extends TestCase
             ],
             'Size three, neighbors eight' => [
                 [
-                    'grid'        => [
+                    'grid' => [
                         [1, 1, 1],
                         [1, 0, 1],
                         [1, 1, 1],
@@ -361,6 +361,46 @@ class SimulationTest extends TestCase
                     'coordinates' => [1, 1],
                 ],
             ],
+        ];
+    }
+
+    /**
+     * @test
+     *
+     * @dataProvider simulationIsCompletedDataProvider
+     */
+    public function simulation_is_completed_should_be_return_as_expected(array $grid, $expectedResult)
+    {
+        $fixedPopulateStrategy = new FixedPopulateStrategy($grid);
+
+        $size = new Size(count($grid), count($grid[0]));
+
+        $simulation = new Simulation($size, $fixedPopulateStrategy);
+
+        $isCompleted = $simulation->isCompleted();
+
+        $this->assertSame($expectedResult, $isCompleted);
+    }
+
+    public function simulationIsCompletedDataProvider()
+    {
+        return [
+            'simulation_is_completed_should_be_true_for_an_empty_board' => [
+                'grid' => [
+                    [0, 0, 0],
+                    [0, 0, 0],
+                    [0, 0, 0],
+                ],
+                'expectedResult' => true,
+            ],
+            'simulation_is_completed_should_be_false_for_an_filled_board' => [
+                'grid' => [
+                    [1, 1, 1],
+                    [1, 1, 1],
+                    [1, 1, 1],
+                ],
+                'expectedResult' => false,
+            ]
         ];
     }
 
@@ -383,8 +423,8 @@ class SimulationTest extends TestCase
     }
 
     /**
-     * @param array      $grid
-     * @param Size       $size
+     * @param array $grid
+     * @param Size $size
      * @param Coordinate $coordinate
      *
      * @return int

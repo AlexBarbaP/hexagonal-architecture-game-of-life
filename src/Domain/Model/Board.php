@@ -20,16 +20,16 @@ final class Board
 
     /**
      * @param Size $size
-     * @param PopulateStrategyInterface $populatorStrategy
+     * @param PopulateStrategyInterface $populateStrategy
      */
-    public function __construct(Size $size, PopulateStrategyInterface $populatorStrategy)
+    public function __construct(Size $size, PopulateStrategyInterface $populateStrategy)
     {
         $this->grid = $this->initializeEmptyGrid($size);
 
         $this->size             = clone $size;
-        $this->populateStrategy = clone $populatorStrategy;
+        $this->populateStrategy = clone $populateStrategy;
 
-        $this->grid = $populatorStrategy->populate($this->grid);
+        $this->grid = $populateStrategy->populate($this->grid);
     }
 
     /**
@@ -118,7 +118,6 @@ final class Board
             }
         } catch (\Exception $t) {
             // no behaviour required here
-            $a = $t;
         }
 
         return true;

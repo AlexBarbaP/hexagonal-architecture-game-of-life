@@ -19,7 +19,7 @@ class OutputParser implements OutputParserInterface
         foreach ($boardGrid as $row) {
             $output .= implode(' ', array_map(
                         function ($element) {
-                            return $element ?: ' ';
+                            return $element ? '.' : ' ';
 
                         }, $row)
                 ) . "\n";
