@@ -4,10 +4,14 @@ declare(strict_types=1);
 namespace Application\ConsoleCommands;
 
 use Application\Application;
+use Application\Config\Config;
 use Application\InputParser;
 use Application\InputValidator;
 use Application\OutputParser;
 use Exception;
+use Infrastructure\Doctrine\DoctrineEntityManagerFactory;
+use Infrastructure\Doctrine\RepositoryInterfaceAdapters\DoctrineGameStatusRepositoryAdapter;
+use Infrastructure\Doctrine\StoreInterfaceAdapters\DoctrineGameStatusStoreAdapter;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -21,7 +25,7 @@ class SimulationConsoleCommand extends Command
     const ARGUMENT_WIDTH = 'width';
     const ARGUMENT_MAX_ITERATIONS = 'max_iterations';
 
-    const ITERATIONS_SLEEP_DELAY = 1;
+    const ITERATIONS_SLEEP_DELAY = 1000;
 
     /**
      * @inheritdoc
@@ -45,12 +49,36 @@ class SimulationConsoleCommand extends Command
         $argumentWidth      = $input->getArgument(self::ARGUMENT_WIDTH);
         $argumentIterations = (int)$input->getArgument(self::ARGUMENT_MAX_ITERATIONS);
 
+        $config = Config::getConfig(Config::PROD_ENV);
+
+        $masterDoctrineEntityManagerFactory = new DoctrineEntityManagerFactory(
+            $config[Config::ENTITY_PATHS],
+            $config[Config::MASTER_DB_PARAMS]
+        );
+        $masterEntityManager          = $masterDoctrineEntityManagerFactory->getEntityManager();
+
+        $slaveDoctrineEntityManagerFactory = new DoctrineEntityManagerFactory(
+            $config[Config::ENTITY_PATHS],
+            $config[Config::SLAVE_DB_PARAMS]
+        );
+        $slaveEntityManager          = $slaveDoctrineEntityManagerFactory->getEntityManager();
+
+        $doctrineGameStatusRepository = new DoctrineGameStatusRepositoryAdapter($slaveEntityManager);
+        $doctrineGameStatusStore      = new DoctrineGameStatusStoreAdapter($masterEntityManager);
+
         $inputParser    = new InputParser();
         $outputParser   = new OutputParser();
         $inputValidator = new InputValidator();
 
         try {
-            $application = new Application($inputParser, $outputParser, $inputValidator, $argumentIterations ?: 0);
+            $application = new Application(
+                $doctrineGameStatusRepository,
+                $doctrineGameStatusStore,
+                $inputParser,
+                $outputParser,
+                $inputValidator,
+                $argumentIterations ?: 0
+            );
 
             $application->init($argumentHeight, $argumentWidth);
 
@@ -60,7 +88,7 @@ class SimulationConsoleCommand extends Command
 
                 $application->iterate();
 
-                sleep(self::ITERATIONS_SLEEP_DELAY);
+                usleep(self::ITERATIONS_SLEEP_DELAY);
             } while (!$application->isSimulationCompleted());
 
             $this->renderBoard($application, $output, $iteration);
