@@ -1,7 +1,8 @@
 <?php
 declare(strict_types=1);
 
-namespace BlogBoundedContext\Infrastructure\Doctrine\StoreInterfaceAdapters;
+namespace Infrastructure\Doctrine\StoreInterfaceAdapters;
+
 use Doctrine\ORM\EntityManager;
 use Domain\Model\Entities\GameStatus;
 use Domain\Model\Ports\GameStatusStoreInterface;

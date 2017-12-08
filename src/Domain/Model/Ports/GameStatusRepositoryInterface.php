@@ -16,4 +16,9 @@ interface GameStatusRepositoryInterface
      * @throws EntityNotFoundException
      */
     public function find(GameStatusId $gameStatusId): GameStatus;
+
+    /**
+     * @return GameStatus[]
+     */
+    public function findAll(): array;
 }

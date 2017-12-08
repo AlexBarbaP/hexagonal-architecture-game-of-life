@@ -35,19 +35,19 @@ final class FixedPopulateStrategy implements PopulateStrategyInterface
     }
 
     /**
-     * @param array $grid
+     * @param array $boardGrid
      *
      * @return array
      *
      * @throws InvalidSizeException
      */
-    public function populate(array $grid): array
+    public function populate(array $boardGrid): array
     {
-        for ($y = 0; $y < count($grid); $y++) {
-            $grid = $this->populateRow($grid, $y);
+        for ($y = 0; $y < count($boardGrid); $y++) {
+            $boardGrid = $this->populateRow($boardGrid, $y);
         }
 
-        return $grid;
+        return $boardGrid;
     }
 
     /**

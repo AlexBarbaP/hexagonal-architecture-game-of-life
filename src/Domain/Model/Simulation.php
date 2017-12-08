@@ -7,7 +7,6 @@ use Domain\Model\Entities\GameStatus;
 use Domain\Model\Entities\GameStatusId;
 use Domain\Model\PopulateStrategies\FixedPopulateStrategy;
 use Domain\Model\PopulateStrategies\PopulateStrategyInterface;
-use Domain\Model\Ports\GameStatusRepositoryInterface;
 use Domain\Model\Ports\GameStatusStoreInterface;
 use Domain\Model\Rules\DeadSimulationRule;
 use Domain\Model\Rules\PopulateSimulationRule;
@@ -22,30 +21,56 @@ final class Simulation
     /** @var RuleInterface[] */
     private $rules;
 
-    /** @var GameStatusRepositoryInterface */
-    private $gameStatusRepository;
-
     /** @var GameStatusStoreInterface */
     private $gameStatusStore;
 
     /**
-     * @param Size $size
+     * @param Size                      $size
      * @param PopulateStrategyInterface $populateStrategy
+     * @param GameStatusStoreInterface  $gameStatusStore
      */
     public function __construct(
         Size $size,
         PopulateStrategyInterface $populateStrategy,
-        GameStatusRepositoryInterface $gameStatusRepository,
         GameStatusStoreInterface $gameStatusStore
     ) {
-        $this->gameStatusRepository = $gameStatusRepository;
-        $this->gameStatusStore      = $gameStatusStore;
+        $this->gameStatusStore = $gameStatusStore;
 
         $this->board = new Board($size, $populateStrategy);
 
         $this->addRules();
 
         $this->storeInitialGameStatus();
+    }
+
+    /**
+     *
+     */
+    public function iterate(): void
+    {
+        $newGrid = $this->iterateBoard($this->getBoard()->getGrid());
+
+        $fixedPopulateStrategy = new FixedPopulateStrategy($newGrid);
+
+        $this->board = new Board($this->board->getSize(), $fixedPopulateStrategy);
+    }
+
+    /**
+     * @return Board
+     */
+    public function getBoard(): Board
+    {
+        return $this->board;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCompleted(): bool
+    {
+        $anyPopulatedCell = $this->getBoard()->isAnyPopulatedCell();
+
+        return !$anyPopulatedCell;
     }
 
     /**
@@ -69,18 +94,6 @@ final class Simulation
         $gameStatus = new GameStatus($gameStatusId, $status);
 
         $this->gameStatusStore->save($gameStatus);
-    }
-
-    /**
-     *
-     */
-    public function iterate(): void
-    {
-        $newGrid = $this->iterateBoard($this->getBoard()->getGrid());
-
-        $fixedPopulateStrategy = new FixedPopulateStrategy($newGrid);
-
-        $this->board = new Board($this->board->getSize(), $fixedPopulateStrategy);
     }
 
     /**
@@ -124,7 +137,7 @@ final class Simulation
 
     /**
      * @param CellStatus $cellStatus
-     * @param int $cellNeighbors
+     * @param int        $cellNeighbors
      *
      * @return CellStatus
      */
@@ -139,23 +152,5 @@ final class Simulation
         }
 
         return $cellStatus;
-    }
-
-    /**
-     * @return Board
-     */
-    public function getBoard(): Board
-    {
-        return $this->board;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isCompleted(): bool
-    {
-        $anyPopulatedCell = $this->getBoard()->isAnyPopulatedCell();
-
-        return !$anyPopulatedCell;
     }
 }

@@ -4,9 +4,11 @@ declare(strict_types=1);
 namespace Infrastructure\Doctrine;
 
 use Doctrine\Common\Cache\ArrayCache;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Tools\Setup;
+use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Types\Type;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\ORMException;
+use Doctrine\ORM\Tools\Setup;
 use Infrastructure\Doctrine\Domain\Model\Entities\DoctrineGameStatusId;
 
 class DoctrineEntityManagerFactory
@@ -18,27 +20,31 @@ class DoctrineEntityManagerFactory
     private $connectionParams = [];
 
     /**
-     * DoctrineEntityManagerFactory constructor.
-     *
      * @param array $entityPaths
      * @param array $connectionParams
+     *
+     * @throws DBALException
      */
     public function __construct(array $entityPaths, array $connectionParams)
     {
         $this->entityPaths      = $entityPaths;
         $this->connectionParams = $connectionParams;
+
+        if (!Type::hasType('GameStatusId')) {
+            Type::addType('GameStatusId', DoctrineGameStatusId::class);
+        }
     }
 
     /**
-     * Returns Doctrine EntityManager instance
+     * @return EntityManager
+     *
+     * @throws ORMException
      */
     public function getEntityManager()
     {
-        Type::addType('GameStatusId', DoctrineGameStatusId::class);
-
-        $isDevMode    = true;
-        $proxyDir     = null;
-        $cache        = new ArrayCache();
+        $isDevMode = true;
+        $proxyDir  = null;
+        $cache     = new ArrayCache();
 
         $config = Setup::createXMLMetadataConfiguration(
             $this->entityPaths,

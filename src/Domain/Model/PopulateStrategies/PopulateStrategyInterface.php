@@ -10,9 +10,9 @@ interface PopulateStrategyInterface
     /**
      * Returns a grid array of Cells populated using some population strategy
      *
-     * @param Cell[] $grid
+     * @param Cell[] $boardGrid
      *
      * @return Cell[]
      */
-    public function populate(array $grid): array;
+    public function populate(array $boardGrid): array;
 }

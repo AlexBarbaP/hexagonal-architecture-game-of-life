@@ -12,8 +12,7 @@
         />
         <field
                 name="status"
-                type="string"
-                nullable="false"
+                type="text"
         />
     </entity>
 </doctrine-mapping>

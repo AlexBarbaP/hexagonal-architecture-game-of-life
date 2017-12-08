@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace BlogBoundedContext\Infrastructure\Doctrine\RepositoryInterfaceAdapters;
+namespace Infrastructure\Doctrine\RepositoryInterfaceAdapters;
 
 use Doctrine\ORM\EntityManager;
 use Domain\Exception\EntityNotFoundException;
@@ -38,5 +38,15 @@ class DoctrineGameStatusRepositoryAdapter implements GameStatusRepositoryInterfa
         }
 
         return $gameStatus;
+    }
+
+    /**
+     * @return GameStatus[]
+     */
+    public function findAll(): array
+    {
+        $gameCollection = $this->em->getRepository(GameStatus::class)->findAll();
+
+        return $gameCollection;
     }
 }

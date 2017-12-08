@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "d1b2e5a14286ac8e7b52de41dddbc3a7",
+    "content-hash": "4c3517e9b5f79c88babcff77bba2c9b1",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -72,7 +72,7 @@
                 "docblock",
                 "parser"
             ],
-            "time": "2017-12-06 07:11:42"
+            "time": "2017-12-06T07:11:42+00:00"
         },
         {
             "name": "doctrine/cache",
@@ -148,7 +148,7 @@
                 "cache",
                 "caching"
             ],
-            "time": "2017-08-25 06:51:37"
+            "time": "2017-08-25T06:51:37+00:00"
         },
         {
             "name": "doctrine/collections",
@@ -216,7 +216,7 @@
                 "collections",
                 "iterator"
             ],
-            "time": "2017-08-30 09:16:50"
+            "time": "2017-08-30T09:16:50+00:00"
         },
         {
             "name": "doctrine/common",
@@ -295,7 +295,7 @@
                 "persistence",
                 "spl"
             ],
-            "time": "2017-09-02 17:51:46"
+            "time": "2017-09-02T17:51:46+00:00"
         },
         {
             "name": "doctrine/dbal",
@@ -303,12 +303,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "a4d7acdf02cd9e4742eca7de67d33cc98cbd19d1"
+                "reference": "cb08c4dd527b88099ae6c8676a9bc63f7a4976b8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/a4d7acdf02cd9e4742eca7de67d33cc98cbd19d1",
-                "reference": "a4d7acdf02cd9e4742eca7de67d33cc98cbd19d1",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/cb08c4dd527b88099ae6c8676a9bc63f7a4976b8",
+                "reference": "cb08c4dd527b88099ae6c8676a9bc63f7a4976b8",
                 "shasum": ""
             },
             "require": {
@@ -321,7 +321,8 @@
                 "phpunit/phpunit": "^6.3",
                 "phpunit/phpunit-mock-objects": "!=3.2.4,!=3.2.5",
                 "squizlabs/php_codesniffer": "^3.0",
-                "symfony/console": "2.*||^3.0"
+                "symfony/console": "2.*||^3.0",
+                "symfony/phpunit-bridge": "^3.3"
             },
             "suggest": {
                 "symfony/console": "For helpful console commands such as SQL execution and import of files."
@@ -370,7 +371,7 @@
                 "persistence",
                 "queryobject"
             ],
-            "time": "2017-11-28 14:50:03"
+            "time": "2017-12-08T09:12:17+00:00"
         },
         {
             "name": "doctrine/inflector",
@@ -437,7 +438,7 @@
                 "singularize",
                 "string"
             ],
-            "time": "2017-10-04 05:38:52"
+            "time": "2017-10-04T05:38:52+00:00"
         },
         {
             "name": "doctrine/instantiator",
@@ -489,7 +490,7 @@
                 "constructor",
                 "instantiate"
             ],
-            "time": "2017-09-19 12:41:22"
+            "time": "2017-09-19T12:41:22+00:00"
         },
         {
             "name": "doctrine/lexer",
@@ -543,7 +544,7 @@
                 "lexer",
                 "parser"
             ],
-            "time": "2017-07-24 09:37:08"
+            "time": "2017-07-24T09:37:08+00:00"
         },
         {
             "name": "doctrine/orm",
@@ -551,12 +552,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/doctrine2.git",
-                "reference": "f13f7ebe54d95c041d583f493102c3ea323a919c"
+                "reference": "b79b26aa8be3a181876cbaf79b94d1c9ee43588f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/f13f7ebe54d95c041d583f493102c3ea323a919c",
-                "reference": "f13f7ebe54d95c041d583f493102c3ea323a919c",
+                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/b79b26aa8be3a181876cbaf79b94d1c9ee43588f",
+                "reference": "b79b26aa8be3a181876cbaf79b94d1c9ee43588f",
                 "shasum": ""
             },
             "require": {
@@ -625,7 +626,7 @@
                 "database",
                 "orm"
             ],
-            "time": "2017-12-03 10:27:52"
+            "time": "2017-12-08T08:44:35+00:00"
         },
         {
             "name": "league/tactician",
@@ -676,7 +677,7 @@
                 "command bus",
                 "service layer"
             ],
-            "time": "2017-11-30 09:17:20"
+            "time": "2017-11-30T09:17:20+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -806,7 +807,7 @@
                 "identifier",
                 "uuid"
             ],
-            "time": "2017-12-01 17:02:13"
+            "time": "2017-12-01T17:02:13+00:00"
         },
         {
             "name": "symfony/console",
@@ -874,7 +875,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2017-12-04 12:32:14"
+            "time": "2017-12-04T12:32:14+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -933,10 +934,67 @@
                 "portable",
                 "shim"
             ],
-            "time": "2017-10-11 12:05:26"
+            "time": "2017-10-11T12:05:26+00:00"
         }
     ],
     "packages-dev": [
+        {
+            "name": "doctrine/data-fixtures",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/doctrine/data-fixtures.git",
+                "reference": "b0ab34490084cd4724c3cfe8afe75a30a0225f6b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/data-fixtures/zipball/b0ab34490084cd4724c3cfe8afe75a30a0225f6b",
+                "reference": "b0ab34490084cd4724c3cfe8afe75a30a0225f6b",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/common": "~2.2",
+                "php": "^7.1"
+            },
+            "require-dev": {
+                "doctrine/dbal": "^2.5.4",
+                "doctrine/orm": "^2.5.4",
+                "phpunit/phpunit": "^6.3"
+            },
+            "suggest": {
+                "alcaeus/mongo-php-adapter": "For using MongoDB ODM with PHP 7",
+                "doctrine/mongodb-odm": "For loading MongoDB ODM fixtures",
+                "doctrine/orm": "For loading ORM fixtures",
+                "doctrine/phpcr-odm": "For loading PHPCR ODM fixtures"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.3.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Doctrine\\Common\\DataFixtures\\": "lib/Doctrine/Common/DataFixtures"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jonathan Wage",
+                    "email": "jonwage@gmail.com"
+                }
+            ],
+            "description": "Data Fixtures for all Doctrine Object Managers",
+            "homepage": "http://www.doctrine-project.org",
+            "keywords": [
+                "database"
+            ],
+            "time": "2017-12-05T11:48:24+00:00"
+        },
         {
             "name": "myclabs/deep-copy",
             "version": "1.x-dev",
@@ -985,7 +1043,7 @@
                 "object",
                 "object graph"
             ],
-            "time": "2017-11-29 14:36:38"
+            "time": "2017-11-29T14:36:38+00:00"
         },
         {
             "name": "phar-io/manifest",
@@ -1040,7 +1098,7 @@
                 }
             ],
             "description": "Component for reading phar.io manifest information from a PHP Archive (PHAR)",
-            "time": "2017-04-07 07:07:10"
+            "time": "2017-04-07T07:07:10+00:00"
         },
         {
             "name": "phar-io/version",
@@ -1141,7 +1199,7 @@
                 "reflection",
                 "static analysis"
             ],
-            "time": "2017-09-11 18:02:19"
+            "time": "2017-09-11T18:02:19+00:00"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
@@ -1149,12 +1207,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
-                "reference": "c19b4d170c5a9cc9d93d3d63d7125f894f2726b1"
+                "reference": "4ea190884db7a90912aa756f00b385beaeb2eb84"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/c19b4d170c5a9cc9d93d3d63d7125f894f2726b1",
-                "reference": "c19b4d170c5a9cc9d93d3d63d7125f894f2726b1",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/4ea190884db7a90912aa756f00b385beaeb2eb84",
+                "reference": "4ea190884db7a90912aa756f00b385beaeb2eb84",
                 "shasum": ""
             },
             "require": {
@@ -1166,6 +1224,7 @@
             "require-dev": {
                 "doctrine/instantiator": "^1.0",
                 "mockery/mockery": "^1.0",
+                "phpstan/phpstan": "^0.9.0",
                 "phpunit/phpunit": "^6.4"
             },
             "type": "library",
@@ -1190,7 +1249,7 @@
                 }
             ],
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
-            "time": "2017-11-30 09:27:01"
+            "time": "2017-12-07T20:29:55+00:00"
         },
         {
             "name": "phpdocumentor/type-resolver",
@@ -1245,12 +1304,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "e4ed002c67da8eceb0eb8ddb8b3847bb53c5c2bf"
+                "reference": "3d0b3928bb1f6b1046a4547e96da9397a165f10e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/e4ed002c67da8eceb0eb8ddb8b3847bb53c5c2bf",
-                "reference": "e4ed002c67da8eceb0eb8ddb8b3847bb53c5c2bf",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/3d0b3928bb1f6b1046a4547e96da9397a165f10e",
+                "reference": "3d0b3928bb1f6b1046a4547e96da9397a165f10e",
                 "shasum": ""
             },
             "require": {
@@ -1300,7 +1359,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2017-11-24 13:59:53"
+            "time": "2017-12-07T16:59:59+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -1308,12 +1367,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "28d14704b5bbe488f6890f7e24e1ee53b7a99175"
+                "reference": "673925a0e1cde6c0c604ebcf06542ec89c66cf00"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/28d14704b5bbe488f6890f7e24e1ee53b7a99175",
-                "reference": "28d14704b5bbe488f6890f7e24e1ee53b7a99175",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/673925a0e1cde6c0c604ebcf06542ec89c66cf00",
+                "reference": "673925a0e1cde6c0c604ebcf06542ec89c66cf00",
                 "shasum": ""
             },
             "require": {
@@ -1363,7 +1422,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-11-28 13:34:28"
+            "time": "2017-12-07T10:13:45+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -1410,7 +1469,7 @@
                 "filesystem",
                 "iterator"
             ],
-            "time": "2017-11-27 13:52:08"
+            "time": "2017-11-27T13:52:08+00:00"
         },
         {
             "name": "phpunit/php-text-template",
@@ -1500,7 +1559,7 @@
             "keywords": [
                 "timer"
             ],
-            "time": "2017-03-07 15:42:04"
+            "time": "2017-03-07T15:42:04+00:00"
         },
         {
             "name": "phpunit/php-token-stream",
@@ -1549,7 +1608,7 @@
             "keywords": [
                 "tokenizer"
             ],
-            "time": "2017-11-28 13:47:13"
+            "time": "2017-11-28T13:47:13+00:00"
         },
         {
             "name": "phpunit/phpunit",
@@ -1557,12 +1616,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "37aa5d9ed78a1e5a242dfd3edb26feac835dced8"
+                "reference": "e5b7ff95f9bc798381280b10dd3aa7871d0a3dc4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/37aa5d9ed78a1e5a242dfd3edb26feac835dced8",
-                "reference": "37aa5d9ed78a1e5a242dfd3edb26feac835dced8",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/e5b7ff95f9bc798381280b10dd3aa7871d0a3dc4",
+                "reference": "e5b7ff95f9bc798381280b10dd3aa7871d0a3dc4",
                 "shasum": ""
             },
             "require": {
@@ -1580,7 +1639,7 @@
                 "phpunit/php-file-iterator": "^1.4.3",
                 "phpunit/php-text-template": "^1.2.1",
                 "phpunit/php-timer": "^1.0.9",
-                "phpunit/phpunit-mock-objects": "^5.0",
+                "phpunit/phpunit-mock-objects": "^5.0.4",
                 "sebastian/comparator": "^2.1",
                 "sebastian/diff": "^2.0",
                 "sebastian/environment": "^3.1",
@@ -1629,7 +1688,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-12-01 10:00:32"
+            "time": "2017-12-06T09:35:50+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -1637,19 +1696,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit-mock-objects.git",
-                "reference": "f72a0da31f2bee0b3d90259cacc12f2b0b8b8f5f"
+                "reference": "b2ad32a2b38d39a19f544e2a77eb2e9de51e554e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/f72a0da31f2bee0b3d90259cacc12f2b0b8b8f5f",
-                "reference": "f72a0da31f2bee0b3d90259cacc12f2b0b8b8f5f",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/b2ad32a2b38d39a19f544e2a77eb2e9de51e554e",
+                "reference": "b2ad32a2b38d39a19f544e2a77eb2e9de51e554e",
                 "shasum": ""
             },
             "require": {
                 "doctrine/instantiator": "^1.0.5",
                 "php": "^7.0",
                 "phpunit/php-text-template": "^1.2.1",
-                "sebastian/exporter": "^3.0"
+                "sebastian/exporter": "^3.1"
             },
             "conflict": {
                 "phpunit/phpunit": "<6.0"
@@ -1688,7 +1747,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2017-11-28 04:39:15"
+            "time": "2017-12-07T13:03:27+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
@@ -1733,7 +1792,7 @@
             ],
             "description": "Looks up which function or method a line of code belongs to",
             "homepage": "https://github.com/sebastianbergmann/code-unit-reverse-lookup/",
-            "time": "2017-03-04 10:23:55"
+            "time": "2017-03-04T10:23:55+00:00"
         },
         {
             "name": "sebastian/comparator",
@@ -1797,7 +1856,7 @@
                 "compare",
                 "equality"
             ],
-            "time": "2017-11-16 09:46:37"
+            "time": "2017-11-16T09:46:37+00:00"
         },
         {
             "name": "sebastian/diff",
@@ -1849,7 +1908,7 @@
             "keywords": [
                 "diff"
             ],
-            "time": "2017-11-16 09:47:25"
+            "time": "2017-11-16T09:47:25+00:00"
         },
         {
             "name": "sebastian/environment",
@@ -1899,7 +1958,7 @@
                 "environment",
                 "hhvm"
             ],
-            "time": "2017-11-16 09:47:49"
+            "time": "2017-11-16T09:47:49+00:00"
         },
         {
             "name": "sebastian/exporter",
@@ -1966,7 +2025,7 @@
                 "export",
                 "exporter"
             ],
-            "time": "2017-11-16 09:48:09"
+            "time": "2017-11-16T09:48:09+00:00"
         },
         {
             "name": "sebastian/global-state",
@@ -2017,7 +2076,7 @@
             "keywords": [
                 "global state"
             ],
-            "time": "2017-11-16 09:49:42"
+            "time": "2017-11-16T09:49:42+00:00"
         },
         {
             "name": "sebastian/object-enumerator",
@@ -2064,7 +2123,7 @@
             ],
             "description": "Traverses array structures and object graphs to enumerate all referenced objects",
             "homepage": "https://github.com/sebastianbergmann/object-enumerator/",
-            "time": "2017-11-16 09:50:04"
+            "time": "2017-11-16T09:50:04+00:00"
         },
         {
             "name": "sebastian/object-reflector",
@@ -2109,7 +2168,7 @@
             ],
             "description": "Allows reflection of object attributes, including inherited and non-public ones",
             "homepage": "https://github.com/sebastianbergmann/object-reflector/",
-            "time": "2017-11-16 09:51:26"
+            "time": "2017-11-16T09:51:26+00:00"
         },
         {
             "name": "sebastian/recursion-context",
@@ -2162,7 +2221,7 @@
             ],
             "description": "Provides functionality to recursively process PHP variables",
             "homepage": "http://www.github.com/sebastianbergmann/recursion-context",
-            "time": "2017-11-16 10:04:08"
+            "time": "2017-11-16T10:04:08+00:00"
         },
         {
             "name": "sebastian/resource-operations",
@@ -2204,7 +2263,7 @@
             ],
             "description": "Provides a list of PHP built-in functions that operate on resources",
             "homepage": "https://www.github.com/sebastianbergmann/resource-operations",
-            "time": "2016-10-03 07:43:09"
+            "time": "2016-10-03T07:43:09+00:00"
         },
         {
             "name": "sebastian/version",
@@ -2247,7 +2306,7 @@
             ],
             "description": "Library that helps with managing the version number of Git-hosted PHP projects",
             "homepage": "https://github.com/sebastianbergmann/version",
-            "time": "2016-10-03 07:35:21"
+            "time": "2016-10-03T07:35:21+00:00"
         },
         {
             "name": "theseer/tokenizer",
@@ -2337,7 +2396,7 @@
                 "check",
                 "validate"
             ],
-            "time": "2016-11-23 20:04:41"
+            "time": "2016-11-23T20:04:41+00:00"
         }
     ],
     "aliases": [],
@@ -2347,7 +2406,8 @@
         "symfony/console": 20,
         "doctrine/orm": 20,
         "ramsey/uuid": 20,
-        "phpunit/phpunit": 20
+        "phpunit/phpunit": 20,
+        "doctrine/data-fixtures": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

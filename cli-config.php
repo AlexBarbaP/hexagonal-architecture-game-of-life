@@ -1,27 +1,14 @@
 <?php
 
-use Infrastructure\Doctrine\DoctrineEntityManagerFactory;
+use Application\Config\Config;
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
+use Infrastructure\Doctrine\DoctrineEntityManagerFactory;
 
 require_once 'vendor/autoload.php';
 
+$config = Config::getConfig(Config::PROD_ENV);
 
-// paths to entities
-$entityPaths = [
-    realpath(__DIR__ . '/src/Infrastructure/Doctrine/Domain/Model/Entities'),
-];
-
-// the connection configuration
-$connectionParams = [
-    'host'     => 'mysql-master',
-    'driver'   => 'pdo_mysql',
-    'dbname'   => 'gol_hexagonal',
-    'user'     => 'gol_hexagonal',
-    'password' => 'gol_hexagonal',
-    'charset'  => 'utf8',
-];
-
-$doctrineEntityManagerFactory = new DoctrineEntityManagerFactory($entityPaths, $connectionParams);
+$doctrineEntityManagerFactory = new DoctrineEntityManagerFactory($config[Config::ENTITY_PATHS], $config[Config::MASTER_DB_PARAMS]);
 $entityManager                = $doctrineEntityManagerFactory->getEntityManager();
 
 return ConsoleRunner::createHelperSet($entityManager);

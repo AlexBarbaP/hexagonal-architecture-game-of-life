@@ -9,6 +9,8 @@ use Application\Commands\Simulation\InitializeSimulationCommand;
 use Application\Commands\Simulation\IterateSimulationCommand;
 use Application\Queries\Simulation\SimulationStatusQuery;
 use Application\QueryHandlers\Simulation\SimulationStatusQueryHandler;
+use Domain\Model\Ports\GameStatusRepositoryInterface;
+use Domain\Model\Ports\GameStatusStoreInterface;
 use League\Tactician\CommandBus;
 use League\Tactician\Handler\CommandHandlerMiddleware;
 use League\Tactician\Handler\CommandNameExtractor\ClassNameExtractor;
@@ -20,16 +22,18 @@ class CommandBusFactory
     /** @var CommandBus */
     private $commandBus;
 
-    public function __construct()
-    {
+    public function __construct(
+        GameStatusRepositoryInterface $gameStatusRepository,
+        GameStatusStoreInterface $gameStatusStore
+    ) {
         $nameExtractor = new ClassNameExtractor();
 
         $inflector = new HandleInflector();
 
         // register commands
-        $initializeSimulationCommandHandler = new InitializeSimulationCommandHandler();
-        $iterateSimulationCommandHandler    = new IterateSimulationCommandHandler();
-        $simulationStatusQueryHandler       = new SimulationStatusQueryHandler();
+        $initializeSimulationCommandHandler = new InitializeSimulationCommandHandler($gameStatusRepository, $gameStatusStore);
+        $iterateSimulationCommandHandler    = new IterateSimulationCommandHandler($gameStatusRepository, $gameStatusStore);
+        $simulationStatusQueryHandler       = new SimulationStatusQueryHandler($gameStatusRepository, $gameStatusStore);
 
         $locator = new InMemoryLocator();
         $locator->addHandler($initializeSimulationCommandHandler, InitializeSimulationCommand::class);

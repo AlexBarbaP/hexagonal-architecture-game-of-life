@@ -2,8 +2,8 @@
 <project version="4">
   <component name="PhpInterpreters">
     <interpreters>
-      <interpreter home="docker://hexagonalarchitecturegameoflife_cli:latest/php" id="5949dfde-a7b3-4fd9-89b1-c1df5fda10cb" name="hexagonalarchitecturegameoflife_cli:latest" debugger_id="php.debugger.XDebug">
-        <remote_data DOCKER_ACCOUNT_NAME="Docker" DOCKER_IMAGE_NAME="hexagonalarchitecturegameoflife_cli:latest" DOCKER_REMOTE_PROJECT_PATH="/opt/project" INTERPRETER_PATH="php" HELPERS_PATH="/opt/.phpstorm_helpers" INITIALIZED="false" VALID="true" />
+      <interpreter home="docker://gameoflifehexagonalarchitectureworkshop_cli:latest/php" id="5949dfde-a7b3-4fd9-89b1-c1df5fda10cb" name="hexagonalarchitecturegameoflife_cli:latest" debugger_id="php.debugger.XDebug">
+        <remote_data DOCKER_ACCOUNT_NAME="Docker" DOCKER_IMAGE_NAME="gameoflifehexagonalarchitectureworkshop_cli:latest" DOCKER_REMOTE_PROJECT_PATH="/opt/project" INTERPRETER_PATH="php" HELPERS_PATH="/opt/.phpstorm_helpers" INITIALIZED="false" VALID="true" />
       </interpreter>
     </interpreters>
   </component>
@@ -359,7 +359,7 @@
   <component name="PhpProjectSharedConfiguration" php_language_level="7.1" />
   <component name="PhpUnit">
     <phpunit_settings>
-      <phpunit_by_interpreter interpreter_id="9f7b71d7-36ca-4789-957c-f722ccf3d469" load_method="CUSTOM_LOADER" custom_loader_path="/var/www/vendor/autoload.php" phpunit_phar_path="" />
+      <phpunit_by_interpreter interpreter_id="5949dfde-a7b3-4fd9-89b1-c1df5fda10cb" load_method="CUSTOM_LOADER" custom_loader_path="/var/www/vendor/autoload.php" phpunit_phar_path="" />
     </phpunit_settings>
   </component>
 </project>

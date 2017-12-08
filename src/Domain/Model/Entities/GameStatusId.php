@@ -31,6 +31,14 @@ final class GameStatusId
     /**
      * @return string
      */
+    public function id(): string
+    {
+        return $this->__toString();
+    }
+
+    /**
+     * @return string
+     */
     public function __toString(): string
     {
         return $this->id;

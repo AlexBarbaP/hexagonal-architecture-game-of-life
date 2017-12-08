@@ -28,6 +28,7 @@
     "ramsey/uuid": "^3.0@dev"
   },
   "require-dev": {
-    "phpunit/phpunit": "^7.0@dev"
+    "phpunit/phpunit": "^7.0@dev",
+    "doctrine/data-fixtures": "^1.3@dev"
   }
 }

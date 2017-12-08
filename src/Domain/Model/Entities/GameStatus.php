@@ -20,4 +20,20 @@ final class GameStatus
         $this->id     = $id;
         $this->status = $status;
     }
+
+    /**
+     * @return GameStatusId
+     */
+    public function getId(): GameStatusId
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatus(): string
+    {
+        return $this->status;
+    }
 }
