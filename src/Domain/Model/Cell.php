@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace Domain\Model;
 
-use Domain\Exception\InvalidCellStatusEnumException;
-
 final class Cell
 {
     public const UNPOPULATED = 0;
