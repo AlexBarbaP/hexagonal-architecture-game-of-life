@@ -16,6 +16,7 @@
             <directory suffix=".php">./src</directory>
             <exclude>
                 <directory>./tests</directory>
+                <file>./src/Domain/Model/Events/EventAbstract.php</file>
             </exclude>
         </whitelist>
     </filter>
