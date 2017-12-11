@@ -2,7 +2,7 @@
 
 ## 1.1. Hexagonal Architecture
 
-Homework architecture is based on *Alistair Cockburn* 
+Workshop architecture is based on *Alistair Cockburn* 
 [Hexagonal Architecture](http://alistair.cockburn.us/Hexagonal+architecture), also known as *'Ports and Adapters 
 Architecture'*.
 
@@ -44,15 +44,7 @@ implementations.
 
 ![Image](https://speakerd.s3.amazonaws.com/presentations/de8629f0bf520131c2e20239d959ba18/slide_11.jpg?1400675141)
 
-## 1.3. Bounded Contexts
-
-To better organize the code into the application and let it to scale properly usually the code inside *src* folder is
-grouped into *Bounded Contexts*.
-
-Bounded Contexts represent different approaches to Domain Business logic, for example, different department approaches 
-to the same product.
-
-## 1.4. CQRS (Command Query Responsibility Segregation)
+## 1.3. CQRS (Command Query Responsibility Segregation)
 
 To improve hardware scalability and database replication usage CQRS tells us to split our interactions to the Domain 
 business logic into *Commands* and *Queries*.
@@ -65,7 +57,7 @@ slave database connections and commands are the only ones allow to get master da
 
 The current implementation follows this approach.
 
-## 1.5. Application Contexts
+## 1.4. Application Contexts
 
 Hexagonal Architecture lets write code that is highly decoupled from the application context that will use it.
 
@@ -83,12 +75,6 @@ For each context different Adapters can be implemented so the whole business log
 
 To make easy to distribute, install and execute the application contains a set of Docker containers.
 
-* **Apache**
-Web server container.
- 
-* **Php-Fpm 7.1**
-Php libraries to work together with the Web framework.
- 
 * **Php-cli 7.1** 
 Php libraries to run Tests and Cli-Scripts. 
 
@@ -117,7 +103,7 @@ Project includes two types of tests:
 * **Unit Tests**
 For the Domain Layer or application business logic.
 Those are very fast tests not depending on any external implementation.
-Thanks to the *Persistence Mock Adapters* implementations these tests use in-memory mocked databases. These are not real 
+Thanks to the *InMemory Persistence Adapters* implementations these tests use in-memory mocked databases. These are not real 
 databases (like SQLite In-memory) but just stubs that implement the Persistence Interfaces.
 
 * **Integration Tests**
@@ -164,10 +150,15 @@ docker-compose run cli vendor/bin/phpunit
 ```
 
 2. Run Symfony commands: 
-```
-docker-compose run cli php /var/www/application.php post:create
-docker-compose run cli php /var/www/application.php post:find [post-id]
 
+2.1. Execute random simulation:
+```
+docker-compose run cli php /var/www/application.php simulation:random [height] [width] [iterations:optional]
+```
+
+2.2. Load initial status from database and execute simulation:
+```
+docker-compose run cli php /var/www/application.php simulation:database [height] [width] [simulationStatusId] [iterations:optional]
 ```
 
 # 6. Dependencies
@@ -177,7 +168,6 @@ Production code dependencies:
 * php version 7.1;
 * symfony/console;
 * league/tactician. CommandBus implementation;
-* monolog/monolog. PSR-3 logger;
 * league/event. EventBus implementation;
 * ramsey/uuid;
 * doctrine/orm. Database ORM;
