@@ -1,50 +1,6 @@
 version: '3'
 
-volumes:
-  game_of_life_hexagonal_mysql_data:
-    driver: local
-
-networks:
-  game_of_life_hexagonal-network:
-    driver: bridge
-    ipam:
-      driver: default
-      config:
-        - subnet: 172.71.0.0/24
-
 services:
-  mysql-master:
-    container_name: mysql-master
-    build: docker/mysql/master
-    environment:
-      - MYSQL_REPLICATION_USER=repl_user
-      - MYSQL_REPLICATION_SLAVE_IP=172.71.0.102
-    ports:
-      - 33061:3306
-    networks:
-      game_of_life_hexagonal-network:
-        aliases:
-          - mysql-master
-        ipv4_address: 172.71.0.101
-    volumes:
-      - game_of_life_hexagonal_mysql_data:/var/lib/mysql
-
-  mysql-slave:
-    container_name: mysql-slave
-    build: docker/mysql/slave
-    depends_on:
-      - mysql-master
-    environment:
-      - MASTER_HOST=172.71.0.101
-      - MASTER_PORT=3306
-      - MASTER_USER=repl_user
-    ports:
-      - 33062:3306
-    networks:
-      game_of_life_hexagonal-network:
-        aliases:
-          - mysql-slave
-        ipv4_address: 172.71.0.102
 
   # container usage:
   #  docker-compose run testing /var/www/vendor/bin/phpunit
@@ -59,16 +15,3 @@ services:
           - php-cli
     volumes:
       - .:/var/www
-
-  # container usage:
-  #  docker-compose run composer [command]
-  composer:
-    build: docker/composer
-    working_dir: /var/www/
-    networks:
-      game_of_life_hexagonal-network:
-        aliases:
-          - composer
-    volumes:
-      - .:/var/www
-    command: -q

@@ -3,4 +3,3 @@
 !/var/coverage/.gitKeep
 /docker-compose.override.yml
 /vendor/
-/phpunit.xml
