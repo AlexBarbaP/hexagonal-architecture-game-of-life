@@ -5,17 +5,17 @@ namespace Tests\Integration\Fixtures;
 
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Domain\Model\Entities\GameStatus;
-use Domain\Model\Entities\GameStatusId;
+use Domain\Model\Entities\SimulationStatus;
+use Domain\Model\Entities\SimulationStatusId;
 
-class DoctrineGameStatusFixtureLoader implements FixtureInterface
+class DoctrineSimulationStatusFixtureLoader implements FixtureInterface
 {
     /**
      * @inheritdoc
      */
     public function load(ObjectManager $manager)
     {
-        $gameStatusId = GameStatusId::create();
+        $simulationStatusId = SimulationStatusId::create();
         $status       = serialize([
             [1, 1, 1, 1, 1],
             [1, 1, 1, 1, 1],
@@ -24,9 +24,9 @@ class DoctrineGameStatusFixtureLoader implements FixtureInterface
             [1, 1, 1, 1, 1],
         ]);
 
-        $gameStatus = new GameStatus($gameStatusId, $status);
+        $simulationStatus = new SimulationStatus($simulationStatusId, $status);
 
-        $manager->persist($gameStatus);
+        $manager->persist($simulationStatus);
         $manager->flush();
     }
 }

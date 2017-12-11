@@ -6,10 +6,10 @@ namespace Tests\Domain\Model\PopulateStrategies;
 use Domain\Model\Cell;
 use Domain\Model\CellStatus;
 use Domain\Model\Coordinate;
-use Domain\Model\Entities\GameStatus;
-use Domain\Model\Entities\GameStatusId;
+use Domain\Model\Entities\SimulationStatus;
+use Domain\Model\Entities\SimulationStatusId;
 use Domain\Model\PopulateStrategies\FromStoragePopulateStrategy;
-use Infrastructure\InMemory\RepositoryInterfaceAdapters\InMemoryGameStatusRepositoryAdapter;
+use Infrastructure\InMemory\RepositoryInterfaceAdapters\InMemorySimulationStatusRepositoryAdapter;
 use PHPUnit\Framework\TestCase;
 
 class FromStoragePopulateStrategyTest extends TestCase
@@ -19,14 +19,14 @@ class FromStoragePopulateStrategyTest extends TestCase
      */
     public function from_storage_populate_strategy_should_load_initial_board_from_storage()
     {
-        $gameStatusId    = GameStatusId::create();
-        $gameStatusArray = $this->getGameStatusArray([
+        $simulationStatusId    = SimulationStatusId::create();
+        $simulationStatusArray = $this->getSimulationStatusArray([
             [0, 1],
             [1, 0],
-        ], $gameStatusId);
+        ], $simulationStatusId);
 
-        $inMemoryRepositoryAdapter   = new InMemoryGameStatusRepositoryAdapter($gameStatusArray);
-        $fromStoragePopulateStrategy = new FromStoragePopulateStrategy($inMemoryRepositoryAdapter, $gameStatusId);
+        $inMemoryRepositoryAdapter   = new InMemorySimulationStatusRepositoryAdapter($simulationStatusArray);
+        $fromStoragePopulateStrategy = new FromStoragePopulateStrategy($inMemoryRepositoryAdapter, $simulationStatusId);
 
         $boardGrid = $this->getBoardGrid();
 
@@ -50,11 +50,11 @@ class FromStoragePopulateStrategyTest extends TestCase
      */
     public function fixed_populate_strategy_should_throw_exception_for_one_dimension_array()
     {
-        $gameStatusId    = GameStatusId::create();
-        $gameStatusArray = $this->getGameStatusArray([], $gameStatusId);
+        $simulationStatusId    = SimulationStatusId::create();
+        $simulationStatusArray = $this->getSimulationStatusArray([], $simulationStatusId);
 
-        $inMemoryRepositoryAdapter   = new InMemoryGameStatusRepositoryAdapter($gameStatusArray);
-        $fromStoragePopulateStrategy = new FromStoragePopulateStrategy($inMemoryRepositoryAdapter, $gameStatusId);
+        $inMemoryRepositoryAdapter   = new InMemorySimulationStatusRepositoryAdapter($simulationStatusArray);
+        $fromStoragePopulateStrategy = new FromStoragePopulateStrategy($inMemoryRepositoryAdapter, $simulationStatusId);
 
         $boardGrid = $this->getBoardGrid();
 
@@ -63,19 +63,19 @@ class FromStoragePopulateStrategyTest extends TestCase
     }
 
     /**
-     * @param array        $statusArray
-     * @param GameStatusId $gameStatusId
+     * @param array              $statusArray
+     * @param SimulationStatusId $simulationStatusId
      *
      * @return array
      */
-    private function getGameStatusArray(array $statusArray, GameStatusId $gameStatusId): array
+    private function getSimulationStatusArray(array $statusArray, SimulationStatusId $simulationStatusId): array
     {
-        $serializedGameStatus = serialize($statusArray);
+        $serializedSimulationStatus = serialize($statusArray);
 
         return [
-            new GameStatus(
-                $gameStatusId,
-                $serializedGameStatus
+            new SimulationStatus(
+                $simulationStatusId,
+                $serializedSimulationStatus
             ),
         ];
     }

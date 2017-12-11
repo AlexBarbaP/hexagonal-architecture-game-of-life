@@ -5,16 +5,18 @@ namespace Tests\Integration;
 
 use Application\Config\Config;
 use Application\Factories\CommandBusFactory;
+use Application\Factories\EventBusFactory;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Loader;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\ORM\EntityManager;
 use Infrastructure\Doctrine\DoctrineEntityManagerFactory;
-use Infrastructure\Doctrine\RepositoryInterfaceAdapters\DoctrineGameStatusRepositoryAdapter;
-use Infrastructure\Doctrine\StoreInterfaceAdapters\DoctrineGameStatusStoreAdapter;
+use Infrastructure\Doctrine\RepositoryInterfaceAdapters\DoctrineSimulationStatusRepositoryAdapter;
+use Infrastructure\Doctrine\StoreInterfaceAdapters\DoctrineSimulationStatusStoreAdapter;
+use League\Event\EmitterInterface;
 use League\Tactician\CommandBus;
 use PHPUnit\Framework\TestCase;
-use Tests\Integration\Fixtures\DoctrineGameStatusFixtureLoader;
+use Tests\Integration\Fixtures\DoctrineSimulationStatusFixtureLoader;
 
 class IntegrationTestAbstract extends TestCase
 {
@@ -27,14 +29,17 @@ class IntegrationTestAbstract extends TestCase
     /** @var EntityManager */
     protected $slaveEntityManager;
 
-    /** @var DoctrineGameStatusRepositoryAdapter */
-    protected $doctrineGameStatusRepository;
+    /** @var DoctrineSimulationStatusRepositoryAdapter */
+    protected $doctrineSimulationStatusRepository;
 
-    /** @var DoctrineGameStatusStoreAdapter */
-    protected $doctrineGameStatusStore;
+    /** @var DoctrineSimulationStatusStoreAdapter */
+    protected $doctrineSimulationStatusStore;
 
     /** @var CommandBus */
     protected $commandBus;
+
+    /** @var EmitterInterface */
+    protected $eventBus;
 
     /**
      * @inheritdoc
@@ -57,10 +62,12 @@ class IntegrationTestAbstract extends TestCase
         );
         $this->slaveEntityManager          = $slaveDoctrineEntityManagerFactory->getEntityManager();
 
-        $this->doctrineGameStatusRepository = new DoctrineGameStatusRepositoryAdapter($this->slaveEntityManager);
-        $this->doctrineGameStatusStore      = new DoctrineGameStatusStoreAdapter($this->masterEntityManager);
+        $this->doctrineSimulationStatusRepository = new DoctrineSimulationStatusRepositoryAdapter($this->slaveEntityManager);
+        $this->doctrineSimulationStatusStore      = new DoctrineSimulationStatusStoreAdapter($this->masterEntityManager);
 
         $this->fixturesLoader();
+
+        $this->setupEventBus();
 
         $this->setupCommandBus();
     }
@@ -71,7 +78,7 @@ class IntegrationTestAbstract extends TestCase
     private function fixturesLoader(): void
     {
         $loader = new Loader();
-        $loader->addFixture(new DoctrineGameStatusFixtureLoader());
+        $loader->addFixture(new DoctrineSimulationStatusFixtureLoader());
 
         $purger   = new ORMPurger();
         $executor = new ORMExecutor($this->masterEntityManager, $purger);
@@ -81,11 +88,22 @@ class IntegrationTestAbstract extends TestCase
     /**
      *
      */
-    private function setupCommandBus()
+    private function setupEventBus(): void
+    {
+        $eventBusFactory = new EventBusFactory($this->doctrineSimulationStatusStore);
+
+        $this->eventBus = $eventBusFactory->create();
+    }
+
+    /**
+     *
+     */
+    private function setupCommandBus(): void
     {
         $commandBusFactory = new CommandBusFactory(
-            $this->doctrineGameStatusRepository,
-            $this->doctrineGameStatusStore
+            $this->doctrineSimulationStatusRepository,
+            $this->doctrineSimulationStatusStore,
+            $this->eventBus
         );
 
         $this->commandBus = $commandBusFactory->create();

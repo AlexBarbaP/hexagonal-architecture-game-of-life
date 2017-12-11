@@ -5,7 +5,7 @@ namespace Domain\Model\Entities;
 
 use Ramsey\Uuid\Uuid;
 
-final class GameStatusId
+final class SimulationStatusId
 {
     /** @var string */
     private $id;
@@ -21,9 +21,9 @@ final class GameStatusId
     /**
      * @param null $id
      *
-     * @return GameStatusId
+     * @return SimulationStatusId
      */
-    public static function create($id = null): GameStatusId
+    public static function create($id = null): SimulationStatusId
     {
         return new static($id);
     }

@@ -8,25 +8,25 @@ use Domain\Exception\InvalidSizeException;
 use Domain\Model\Cell;
 use Domain\Model\CellStatus;
 use Domain\Model\Coordinate;
-use Domain\Model\Entities\GameStatusId;
-use Domain\Model\Ports\GameStatusRepositoryInterface;
+use Domain\Model\Entities\SimulationStatusId;
+use Domain\Model\Ports\SimulationStatusRepositoryInterface;
 
 final class FromStoragePopulateStrategy implements PopulateStrategyInterface
 {
-    /** @var GameStatusRepositoryInterface */
-    private $gameStatusRepository;
+    /** @var SimulationStatusRepositoryInterface */
+    private $simulationStatusRepository;
 
-    /** @var GameStatusId */
-    private $gameStatusId;
+    /** @var SimulationStatusId */
+    private $simulationStatusId;
 
     /**
-     * @param GameStatusRepositoryInterface $gameStatusRepository
-     * @param GameStatusId                  $gameStatusId
+     * @param SimulationStatusRepositoryInterface $simulationStatusRepository
+     * @param SimulationStatusId                  $simulationStatusId
      */
-    public function __construct(GameStatusRepositoryInterface $gameStatusRepository, GameStatusId $gameStatusId)
+    public function __construct(SimulationStatusRepositoryInterface $simulationStatusRepository, SimulationStatusId $simulationStatusId)
     {
-        $this->gameStatusRepository = $gameStatusRepository;
-        $this->gameStatusId         = $gameStatusId;
+        $this->simulationStatusRepository = $simulationStatusRepository;
+        $this->simulationStatusId         = $simulationStatusId;
     }
 
     /**
@@ -39,16 +39,16 @@ final class FromStoragePopulateStrategy implements PopulateStrategyInterface
      */
     public function populate(array $boardGrid): array
     {
-        $gameStatus = $this->gameStatusRepository->find($this->gameStatusId);
+        $simulationStatus = $this->simulationStatusRepository->find($this->simulationStatusId);
 
-        $gameStatusArray = unserialize($gameStatus->getStatus());
+        $simulationStatusArray = unserialize($simulationStatus->getStatus());
 
         $populatedGrid = [];
         for ($y = 0; $y < count($boardGrid); $y++) {
             $populatedGrid[] = [];
 
             for ($x = 0; $x < count($boardGrid[$y]); $x++) {
-                $populatedGrid[count($populatedGrid) - 1][] = $this->populateCell($gameStatusArray, $y, $x);
+                $populatedGrid[count($populatedGrid) - 1][] = $this->populateCell($simulationStatusArray, $y, $x);
             }
         }
 
@@ -56,7 +56,7 @@ final class FromStoragePopulateStrategy implements PopulateStrategyInterface
     }
 
     /**
-     * @param array $gameStatusArray
+     * @param array $simulationStatusArray
      * @param int   $y
      * @param int   $x
      *
@@ -64,14 +64,14 @@ final class FromStoragePopulateStrategy implements PopulateStrategyInterface
      *
      * @throws InvalidSizeException
      */
-    private function populateCell(array $gameStatusArray, int $y, int $x): Cell
+    private function populateCell(array $simulationStatusArray, int $y, int $x): Cell
     {
-        if (!isset($gameStatusArray[$y][$x])) {
+        if (!isset($simulationStatusArray[$y][$x])) {
             throw new InvalidSizeException();
         }
 
         $coordinate = new Coordinate($y, $x);
-        $cellStatus = new CellStatus($gameStatusArray[$y][$x]);
+        $cellStatus = new CellStatus($simulationStatusArray[$y][$x]);
 
         return new Cell($coordinate, $cellStatus);
     }

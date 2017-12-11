@@ -22,8 +22,8 @@ class SimulationIntegrationTest extends IntegrationTestAbstract
         $iterations     = 10;
 
         $application = new Application(
-            $this->doctrineGameStatusRepository,
-            $this->doctrineGameStatusStore,
+            $this->doctrineSimulationStatusRepository,
+            $this->doctrineSimulationStatusStore,
             $inputParser,
             $outputParser,
             $inputValidator,
@@ -57,8 +57,8 @@ class SimulationIntegrationTest extends IntegrationTestAbstract
         $iterations     = 10;
 
         $application = new Application(
-            $this->doctrineGameStatusRepository,
-            $this->doctrineGameStatusStore,
+            $this->doctrineSimulationStatusRepository,
+            $this->doctrineSimulationStatusStore,
             $inputParser,
             $outputParser,
             $inputValidator,
@@ -76,7 +76,7 @@ class SimulationIntegrationTest extends IntegrationTestAbstract
      */
     public function run_simulation_should_save_simulation_initial_board_into_database()
     {
-        $initialGameStatusCount = count($this->doctrineGameStatusRepository->findAll());
+        $initialSimulationStatusCount = count($this->doctrineSimulationStatusRepository->findAll());
 
         $inputParser    = new InputParser();
         $outputParser   = new OutputParser();
@@ -84,8 +84,8 @@ class SimulationIntegrationTest extends IntegrationTestAbstract
         $iterations     = 1;
 
         $application = new Application(
-            $this->doctrineGameStatusRepository,
-            $this->doctrineGameStatusStore,
+            $this->doctrineSimulationStatusRepository,
+            $this->doctrineSimulationStatusStore,
             $inputParser,
             $outputParser,
             $inputValidator,
@@ -99,9 +99,9 @@ class SimulationIntegrationTest extends IntegrationTestAbstract
 
         sleep(1);
 
-        $finalGameStatusCount = count($this->doctrineGameStatusRepository->findAll());
+        $finalSimulationStatusCount = count($this->doctrineSimulationStatusRepository->findAll());
 
-        $this->assertEquals($initialGameStatusCount + 1, $finalGameStatusCount);
+        $this->assertEquals($initialSimulationStatusCount + 1, $finalSimulationStatusCount);
     }
 
     /**
@@ -109,8 +109,8 @@ class SimulationIntegrationTest extends IntegrationTestAbstract
      */
     public function run_simulation_loading_initial_status_from_database_should_output_an_arbitrary_final_simulation_board()
     {
-        $initialGameStatusCollection = $this->doctrineGameStatusRepository->findAll();
-        $initialGameStatusId         = $initialGameStatusCollection[0]->getId();
+        $initialSimulationStatusCollection = $this->doctrineSimulationStatusRepository->findAll();
+        $initialSimulationStatusId         = $initialSimulationStatusCollection[0]->getId();
 
         $inputParser    = new InputParser();
         $outputParser   = new OutputParser();
@@ -118,13 +118,13 @@ class SimulationIntegrationTest extends IntegrationTestAbstract
         $iterations     = 1;
 
         $application = new Application(
-            $this->doctrineGameStatusRepository,
-            $this->doctrineGameStatusStore,
+            $this->doctrineSimulationStatusRepository,
+            $this->doctrineSimulationStatusStore,
             $inputParser,
             $outputParser,
             $inputValidator,
             $iterations,
-            $initialGameStatusId
+            $initialSimulationStatusId
         );
 
         $height = '5';

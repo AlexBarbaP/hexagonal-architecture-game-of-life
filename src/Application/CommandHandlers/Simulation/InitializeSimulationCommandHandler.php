@@ -4,29 +4,36 @@ declare(strict_types=1);
 namespace Application\CommandHandlers\Simulation;
 
 use Application\Commands\Simulation\InitializeSimulationCommand;
-use Domain\Model\Ports\GameStatusRepositoryInterface;
-use Domain\Model\Ports\GameStatusStoreInterface;
+use Domain\Model\Ports\SimulationStatusRepositoryInterface;
+use Domain\Model\Ports\SimulationStatusStoreInterface;
 use Domain\Model\Simulation;
 use Domain\Model\Size;
+use League\Event\EmitterInterface;
 
 class InitializeSimulationCommandHandler
 {
-    /** @var GameStatusRepositoryInterface */
-    private $gameStatusRepository;
+    /** @var SimulationStatusRepositoryInterface */
+    private $simulationStatusRepository;
 
-    /** @var GameStatusStoreInterface */
-    private $gameStatusStore;
+    /** @var SimulationStatusStoreInterface */
+    private $simulationStatusStore;
+
+    /** @var EmitterInterface */
+    private $emitter;
 
     /**
-     * @param GameStatusRepositoryInterface $gameStatusRepository
-     * @param GameStatusStoreInterface      $gameStatusStore
+     * @param SimulationStatusRepositoryInterface $simulationStatusRepository
+     * @param SimulationStatusStoreInterface      $simulationStatusStore
+     * @param EmitterInterface                    $emitter
      */
     public function __construct(
-        GameStatusRepositoryInterface $gameStatusRepository,
-        GameStatusStoreInterface $gameStatusStore
+        SimulationStatusRepositoryInterface $simulationStatusRepository,
+        SimulationStatusStoreInterface $simulationStatusStore,
+        EmitterInterface $emitter
     ) {
-        $this->gameStatusRepository = $gameStatusRepository;
-        $this->gameStatusStore      = $gameStatusStore;
+        $this->simulationStatusRepository = $simulationStatusRepository;
+        $this->simulationStatusStore      = $simulationStatusStore;
+        $this->emitter                    = $emitter;
     }
 
     /**
@@ -39,7 +46,7 @@ class InitializeSimulationCommandHandler
         $size             = new Size($command->height(), $command->width());
         $populateStrategy = $command->populateStrategy();
 
-        $simulation = new Simulation($size, $populateStrategy, $this->gameStatusStore);
+        $simulation = new Simulation($size, $populateStrategy, $this->emitter);
 
         return $simulation;
     }

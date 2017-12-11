@@ -7,7 +7,7 @@ use Application\Application;
 use Application\InputParser;
 use Application\InputValidator;
 use Application\OutputParser;
-use Domain\Model\Entities\GameStatusId;
+use Domain\Model\Entities\SimulationStatusId;
 use Exception;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -48,13 +48,13 @@ class DatabaseSimulationConsoleCommand extends AbstractSimulationConsoleCommand
 
         try {
             $application = new Application(
-                $this->gameStatusRepository,
-                $this->gameStatusStore,
+                $this->simulationStatusRepository,
+                $this->simulationStatusStore,
                 $inputParser,
                 $outputParser,
                 $inputValidator,
                 $argumentIterations ?: 0,
-                GameStatusId::create($argumentSimulationId)
+                SimulationStatusId::create($argumentSimulationId)
             );
 
             $application->init($argumentHeight, $argumentWidth);

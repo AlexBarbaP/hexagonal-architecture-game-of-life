@@ -4,28 +4,28 @@ declare(strict_types=1);
 namespace Application\CommandHandlers\Simulation;
 
 use Application\Commands\Simulation\IterateSimulationCommand;
-use Domain\Model\Ports\GameStatusRepositoryInterface;
-use Domain\Model\Ports\GameStatusStoreInterface;
+use Domain\Model\Ports\SimulationStatusRepositoryInterface;
+use Domain\Model\Ports\SimulationStatusStoreInterface;
 use Domain\Model\Simulation;
 
 class IterateSimulationCommandHandler
 {
-    /** @var GameStatusRepositoryInterface */
-    private $gameStatusRepository;
+    /** @var SimulationStatusRepositoryInterface */
+    private $simulationStatusRepository;
 
-    /** @var GameStatusStoreInterface */
-    private $gameStatusStore;
+    /** @var SimulationStatusStoreInterface */
+    private $simulationStatusStore;
 
     /**
-     * @param GameStatusRepositoryInterface $gameStatusRepository
-     * @param GameStatusStoreInterface      $gameStatusStore
+     * @param SimulationStatusRepositoryInterface $simulationStatusRepository
+     * @param SimulationStatusStoreInterface      $simulationStatusStore
      */
     public function __construct(
-        GameStatusRepositoryInterface $gameStatusRepository,
-        GameStatusStoreInterface $gameStatusStore
+        SimulationStatusRepositoryInterface $simulationStatusRepository,
+        SimulationStatusStoreInterface $simulationStatusStore
     ) {
-        $this->gameStatusRepository = $gameStatusRepository;
-        $this->gameStatusStore      = $gameStatusStore;
+        $this->simulationStatusRepository = $simulationStatusRepository;
+        $this->simulationStatusStore      = $simulationStatusStore;
     }
 
     /**

@@ -43,8 +43,8 @@ class RandomSimulationConsoleCommand extends AbstractSimulationConsoleCommand
 
         try {
             $application = new Application(
-                $this->gameStatusRepository,
-                $this->gameStatusStore,
+                $this->simulationStatusRepository,
+                $this->simulationStatusStore,
                 $inputParser,
                 $outputParser,
                 $inputValidator,

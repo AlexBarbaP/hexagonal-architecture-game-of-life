@@ -5,27 +5,27 @@ namespace Application\QueryHandlers\Simulation;
 
 use Application\Queries\Simulation\SimulationStatusQuery;
 use Domain\Model\Board;
-use Domain\Model\Ports\GameStatusRepositoryInterface;
-use Domain\Model\Ports\GameStatusStoreInterface;
+use Domain\Model\Ports\SimulationStatusRepositoryInterface;
+use Domain\Model\Ports\SimulationStatusStoreInterface;
 
 class SimulationStatusQueryHandler
 {
-    /** @var GameStatusRepositoryInterface */
-    private $gameStatusRepository;
+    /** @var SimulationStatusRepositoryInterface */
+    private $simulationStatusRepository;
 
-    /** @var GameStatusStoreInterface */
-    private $gameStatusStore;
+    /** @var SimulationStatusStoreInterface */
+    private $simulationStatusStore;
 
     /**
-     * @param GameStatusRepositoryInterface $gameStatusRepository
-     * @param GameStatusStoreInterface      $gameStatusStore
+     * @param SimulationStatusRepositoryInterface $simulationStatusRepository
+     * @param SimulationStatusStoreInterface      $simulationStatusStore
      */
     public function __construct(
-        GameStatusRepositoryInterface $gameStatusRepository,
-        GameStatusStoreInterface $gameStatusStore
+        SimulationStatusRepositoryInterface $simulationStatusRepository,
+        SimulationStatusStoreInterface $simulationStatusStore
     ) {
-        $this->gameStatusRepository = $gameStatusRepository;
-        $this->gameStatusStore      = $gameStatusStore;
+        $this->simulationStatusRepository = $simulationStatusRepository;
+        $this->simulationStatusStore      = $simulationStatusStore;
     }
 
     /**

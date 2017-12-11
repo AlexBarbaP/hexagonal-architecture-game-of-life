@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 namespace Domain\Model;
 
-use Domain\Model\Entities\GameStatus;
-use Domain\Model\Entities\GameStatusId;
+use Domain\Model\Events\SimulationInitializedEvent;
 use Domain\Model\PopulateStrategies\FixedPopulateStrategy;
 use Domain\Model\PopulateStrategies\PopulateStrategyInterface;
-use Domain\Model\Ports\GameStatusStoreInterface;
 use Domain\Model\Rules\DeadSimulationRule;
 use Domain\Model\Rules\PopulateSimulationRule;
 use Domain\Model\Rules\RuleInterface;
 use Domain\Model\Rules\SurvivalSimulationRule;
+use League\Event\EmitterInterface;
+use Ramsey\Uuid\Uuid;
 
 final class Simulation
 {
@@ -21,26 +21,28 @@ final class Simulation
     /** @var RuleInterface[] */
     private $rules;
 
-    /** @var GameStatusStoreInterface */
-    private $gameStatusStore;
+    /** @var EmitterInterface */
+    private $eventBus;
 
     /**
      * @param Size                      $size
      * @param PopulateStrategyInterface $populateStrategy
-     * @param GameStatusStoreInterface  $gameStatusStore
+     * @param EmitterInterface          $eventBus
      */
     public function __construct(
         Size $size,
         PopulateStrategyInterface $populateStrategy,
-        GameStatusStoreInterface $gameStatusStore
+        EmitterInterface $eventBus
     ) {
-        $this->gameStatusStore = $gameStatusStore;
+        $this->eventBus = $eventBus;
 
         $this->board = new Board($size, $populateStrategy);
 
         $this->addRules();
 
-        $this->storeInitialGameStatus();
+        $event = new SimulationInitializedEvent(Uuid::uuid4()->toString(), $this->getBoard());
+
+        $this->eventBus->emit($event);
     }
 
     /**
@@ -81,19 +83,6 @@ final class Simulation
         $this->rules[] = new DeadSimulationRule();
         $this->rules[] = new SurvivalSimulationRule();
         $this->rules[] = new PopulateSimulationRule();
-    }
-
-    /**
-     *
-     */
-    private function storeInitialGameStatus(): void
-    {
-        $gameStatusId = GameStatusId::create();
-        $status       = serialize($this->board->toArray());
-
-        $gameStatus = new GameStatus($gameStatusId, $status);
-
-        $this->gameStatusStore->save($gameStatus);
     }
 
     /**

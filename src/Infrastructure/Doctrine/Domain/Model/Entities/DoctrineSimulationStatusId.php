@@ -5,16 +5,16 @@ namespace Infrastructure\Doctrine\Domain\Model\Entities;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\GuidType;
-use Domain\Model\Entities\GameStatusId;
+use Domain\Model\Entities\SimulationStatusId;
 
-class DoctrineGameStatusId extends GuidType
+class DoctrineSimulationStatusId extends GuidType
 {
     /**
      * @return string
      */
     public function getName()
     {
-        return 'GameStatusId';
+        return 'SimulationStatusId';
     }
 
     /**
@@ -31,10 +31,10 @@ class DoctrineGameStatusId extends GuidType
     /**
      * @param $value
      * @param AbstractPlatform $platform
-     * @return GameStatusId
+     * @return SimulationStatusId
      */
     public function convertToPHPValue($value, AbstractPlatform $platform)
     {
-        return GameStatusId::create($value);
+        return SimulationStatusId::create($value);
     }
 }

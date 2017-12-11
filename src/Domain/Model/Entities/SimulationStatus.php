@@ -3,28 +3,28 @@ declare(strict_types=1);
 
 namespace Domain\Model\Entities;
 
-final class GameStatus
+final class SimulationStatus
 {
-    /** @var GameStatusId */
+    /** @var SimulationStatusId */
     private $id;
 
     /** @var string */
     private $status;
 
     /**
-     * @param GameStatusId $id
-     * @param string $status
+     * @param SimulationStatusId $id
+     * @param string             $status
      */
-    public function __construct(GameStatusId $id, string $status)
+    public function __construct(SimulationStatusId $id, string $status)
     {
         $this->id     = $id;
         $this->status = $status;
     }
 
     /**
-     * @return GameStatusId
+     * @return SimulationStatusId
      */
-    public function getId(): GameStatusId
+    public function getId(): SimulationStatusId
     {
         return $this->id;
     }

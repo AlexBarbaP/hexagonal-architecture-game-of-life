@@ -4,10 +4,10 @@ declare(strict_types=1);
 namespace Infrastructure\Doctrine\StoreInterfaceAdapters;
 
 use Doctrine\ORM\EntityManager;
-use Domain\Model\Entities\GameStatus;
-use Domain\Model\Ports\GameStatusStoreInterface;
+use Domain\Model\Entities\SimulationStatus;
+use Domain\Model\Ports\SimulationStatusStoreInterface;
 
-class DoctrineGameStatusStoreAdapter implements GameStatusStoreInterface
+class DoctrineSimulationStatusStoreAdapter implements SimulationStatusStoreInterface
 {
     /** @var EntityManager */
     private $em;
@@ -21,14 +21,14 @@ class DoctrineGameStatusStoreAdapter implements GameStatusStoreInterface
     }
 
     /**
-     * @param GameStatus $gameStatus
+     * @param SimulationStatus $simulationStatus
      *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function save(GameStatus $gameStatus): void
+    public function save(SimulationStatus $simulationStatus): void
     {
-        $this->em->persist($gameStatus);
+        $this->em->persist($simulationStatus);
         $this->em->flush();
     }
 }

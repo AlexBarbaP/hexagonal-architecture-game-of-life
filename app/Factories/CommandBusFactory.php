@@ -9,8 +9,9 @@ use Application\Commands\Simulation\InitializeSimulationCommand;
 use Application\Commands\Simulation\IterateSimulationCommand;
 use Application\Queries\Simulation\SimulationStatusQuery;
 use Application\QueryHandlers\Simulation\SimulationStatusQueryHandler;
-use Domain\Model\Ports\GameStatusRepositoryInterface;
-use Domain\Model\Ports\GameStatusStoreInterface;
+use Domain\Model\Ports\SimulationStatusRepositoryInterface;
+use Domain\Model\Ports\SimulationStatusStoreInterface;
+use League\Event\EmitterInterface;
 use League\Tactician\CommandBus;
 use League\Tactician\Handler\CommandHandlerMiddleware;
 use League\Tactician\Handler\CommandNameExtractor\ClassNameExtractor;
@@ -22,18 +23,29 @@ class CommandBusFactory
     /** @var CommandBus */
     private $commandBus;
 
+    /** @var EmitterInterface */
+    private $eventBus;
+
+    /**
+     * @param SimulationStatusRepositoryInterface $simulationStatusRepository
+     * @param SimulationStatusStoreInterface      $simulationStatusStore
+     * @param EmitterInterface                    $eventBus
+     */
     public function __construct(
-        GameStatusRepositoryInterface $gameStatusRepository,
-        GameStatusStoreInterface $gameStatusStore
+        SimulationStatusRepositoryInterface $simulationStatusRepository,
+        SimulationStatusStoreInterface $simulationStatusStore,
+        EmitterInterface $eventBus
     ) {
+        $this->eventBus = $eventBus;
+
         $nameExtractor = new ClassNameExtractor();
 
         $inflector = new HandleInflector();
 
         // register commands
-        $initializeSimulationCommandHandler = new InitializeSimulationCommandHandler($gameStatusRepository, $gameStatusStore);
-        $iterateSimulationCommandHandler    = new IterateSimulationCommandHandler($gameStatusRepository, $gameStatusStore);
-        $simulationStatusQueryHandler       = new SimulationStatusQueryHandler($gameStatusRepository, $gameStatusStore);
+        $initializeSimulationCommandHandler = new InitializeSimulationCommandHandler($simulationStatusRepository, $simulationStatusStore, $this->eventBus);
+        $iterateSimulationCommandHandler    = new IterateSimulationCommandHandler($simulationStatusRepository, $simulationStatusStore);
+        $simulationStatusQueryHandler       = new SimulationStatusQueryHandler($simulationStatusRepository, $simulationStatusStore);
 
         $locator = new InMemoryLocator();
         $locator->addHandler($initializeSimulationCommandHandler, InitializeSimulationCommand::class);

@@ -7,26 +7,28 @@ use Application\Commands\Simulation\InitializeSimulationCommand;
 use Application\Commands\Simulation\IterateSimulationCommand;
 use Application\Exceptions\InvalidInputException;
 use Application\Factories\CommandBusFactory;
+use Application\Factories\EventBusFactory;
 use Application\Queries\Simulation\SimulationStatusQuery;
 use Domain\Exception\EntityNotFoundException;
 use Domain\Model\Board;
-use Domain\Model\Entities\GameStatusId;
+use Domain\Model\Entities\SimulationStatusId;
 use Domain\Model\PopulateStrategies\FixedPopulateStrategy;
 use Domain\Model\PopulateStrategies\RandomPopulateStrategy;
-use Domain\Model\Ports\GameStatusRepositoryInterface;
-use Domain\Model\Ports\GameStatusStoreInterface;
+use Domain\Model\Ports\SimulationStatusRepositoryInterface;
+use Domain\Model\Ports\SimulationStatusStoreInterface;
 use Domain\Model\Simulation;
 use Domain\Model\Size;
+use League\Event\EmitterInterface;
 use League\Tactician\CommandBus;
 use PHPUnit\Runner\Exception;
 
 class Application
 {
-    /** @var GameStatusRepositoryInterface */
-    private $gameStatusRepository;
+    /** @var SimulationStatusRepositoryInterface */
+    private $simulationStatusRepository;
 
-    /** @var GameStatusStoreInterface */
-    private $gameStatusStore;
+    /** @var SimulationStatusStoreInterface */
+    private $simulationStatusStore;
 
     /** @var InputParserInterface */
     private $inputParser;
@@ -40,8 +42,8 @@ class Application
     /** @var int */
     private $iterations;
 
-    /** @var GameStatusId */
-    private $gameStatusId;
+    /** @var SimulationStatusId */
+    private $simulationStatusId;
 
     /** @var int */
     private $currentIteration = 0;
@@ -49,35 +51,39 @@ class Application
     /** @var CommandBus */
     private $commandBus;
 
+    /** @var EmitterInterface */
+    private $eventBus;
+
     /** @var Simulation */
     private $simulation;
 
     /**
-     * @param GameStatusRepositoryInterface $gameStatusRepository
-     * @param GameStatusStoreInterface      $gameStatusStore
-     * @param InputParserInterface          $inputParser
-     * @param OutputParserInterface         $outputParser
-     * @param ValidatorInterface            $inputValidator
-     * @param int                           $iterations
-     * @param GameStatusId                  $gameStatusId
+     * @param SimulationStatusRepositoryInterface $simulationStatusRepository
+     * @param SimulationStatusStoreInterface      $simulationStatusStore
+     * @param InputParserInterface                $inputParser
+     * @param OutputParserInterface               $outputParser
+     * @param ValidatorInterface                  $inputValidator
+     * @param int                                 $iterations
+     * @param SimulationStatusId                  $simulationStatusId
      */
     public function __construct(
-        GameStatusRepositoryInterface $gameStatusRepository,
-        GameStatusStoreInterface $gameStatusStore,
+        SimulationStatusRepositoryInterface $simulationStatusRepository,
+        SimulationStatusStoreInterface $simulationStatusStore,
         InputParserInterface $inputParser,
         OutputParserInterface $outputParser,
         ValidatorInterface $inputValidator,
         int $iterations,
-        GameStatusId $gameStatusId = null
+        SimulationStatusId $simulationStatusId = null
     ) {
-        $this->gameStatusRepository = $gameStatusRepository;
-        $this->gameStatusStore      = $gameStatusStore;
+        $this->simulationStatusRepository = $simulationStatusRepository;
+        $this->simulationStatusStore      = $simulationStatusStore;
         $this->inputParser          = $inputParser;
         $this->outputParser         = $outputParser;
         $this->inputValidator       = $inputValidator;
         $this->iterations           = $iterations;
-        $this->gameStatusId         = $gameStatusId;
+        $this->simulationStatusId         = $simulationStatusId;
 
+        $this->eventBus   = $this->getEventBus();
         $this->commandBus = $this->getCommandBus();
     }
 
@@ -151,11 +157,27 @@ class Application
     }
 
     /**
+     * @return EmitterInterface
+     */
+    private function getEventBus(): EmitterInterface
+    {
+        $eventBusFactory = new EventBusFactory($this->simulationStatusStore);
+
+        $eventBus = $eventBusFactory->create();
+
+        return $eventBus;
+    }
+
+    /**
      * @return CommandBus
      */
     private function getCommandBus(): CommandBus
     {
-        $commandBusFactory = new CommandBusFactory($this->gameStatusRepository, $this->gameStatusStore);
+        $commandBusFactory = new CommandBusFactory(
+            $this->simulationStatusRepository,
+            $this->simulationStatusStore,
+            $this->eventBus
+        );
 
         $commandBus = $commandBusFactory->create();
 
@@ -170,10 +192,10 @@ class Application
      */
     private function initializeSimulation(Size $size): Simulation
     {
-        if (is_null($this->gameStatusId)) {
+        if (is_null($this->simulationStatusId)) {
             $populateStrategy = new RandomPopulateStrategy();
         } else {
-            $gridStatus      = $this->gameStatusRepository->find($this->gameStatusId);
+            $gridStatus      = $this->simulationStatusRepository->find($this->simulationStatusId);
             $gridStatusArray = unserialize($gridStatus->getStatus());
 
             $populateStrategy = new FixedPopulateStrategy($gridStatusArray);

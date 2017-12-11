@@ -5,11 +5,11 @@ namespace Application\ConsoleCommands;
 
 use Application\Application;
 use Application\Config\Config;
-use Domain\Model\Ports\GameStatusRepositoryInterface;
-use Domain\Model\Ports\GameStatusStoreInterface;
+use Domain\Model\Ports\SimulationStatusRepositoryInterface;
+use Domain\Model\Ports\SimulationStatusStoreInterface;
 use Infrastructure\Doctrine\DoctrineEntityManagerFactory;
-use Infrastructure\Doctrine\RepositoryInterfaceAdapters\DoctrineGameStatusRepositoryAdapter;
-use Infrastructure\Doctrine\StoreInterfaceAdapters\DoctrineGameStatusStoreAdapter;
+use Infrastructure\Doctrine\RepositoryInterfaceAdapters\DoctrineSimulationStatusRepositoryAdapter;
+use Infrastructure\Doctrine\StoreInterfaceAdapters\DoctrineSimulationStatusStoreAdapter;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -21,16 +21,16 @@ abstract class AbstractSimulationConsoleCommand extends Command
     const ARGUMENT_WIDTH          = 'width';
     const ARGUMENT_MAX_ITERATIONS = 'max_iterations';
 
-    const ITERATIONS_SLEEP_DELAY = 100000;
+    const ITERATIONS_SLEEP_DELAY = 10000;
 
     /** @var Config */
     protected $config;
 
-    /** @var GameStatusRepositoryInterface */
-    protected $gameStatusRepository;
+    /** @var SimulationStatusRepositoryInterface */
+    protected $simulationStatusRepository;
 
-    /** @var GameStatusStoreInterface */
-    protected $gameStatusStore;
+    /** @var SimulationStatusStoreInterface */
+    protected $simulationStatusStore;
 
     /**
      * @param string|null $name
@@ -49,7 +49,7 @@ abstract class AbstractSimulationConsoleCommand extends Command
         );
         $masterEntityManager                = $masterDoctrineEntityManagerFactory->getEntityManager();
 
-        $this->gameStatusStore = new DoctrineGameStatusStoreAdapter($masterEntityManager);
+        $this->simulationStatusStore = new DoctrineSimulationStatusStoreAdapter($masterEntityManager);
 
         $slaveDoctrineEntityManagerFactory = new DoctrineEntityManagerFactory(
             $this->config[Config::ENTITY_PATHS],
@@ -57,7 +57,7 @@ abstract class AbstractSimulationConsoleCommand extends Command
         );
         $slaveEntityManager                = $slaveDoctrineEntityManagerFactory->getEntityManager();
 
-        $this->gameStatusRepository = new DoctrineGameStatusRepositoryAdapter($slaveEntityManager);
+        $this->simulationStatusRepository = new DoctrineSimulationStatusRepositoryAdapter($slaveEntityManager);
     }
 
     /**

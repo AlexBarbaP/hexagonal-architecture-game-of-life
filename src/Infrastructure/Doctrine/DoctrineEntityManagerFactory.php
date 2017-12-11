@@ -9,7 +9,7 @@ use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Tools\Setup;
-use Infrastructure\Doctrine\Domain\Model\Entities\DoctrineGameStatusId;
+use Infrastructure\Doctrine\Domain\Model\Entities\DoctrineSimulationStatusId;
 
 class DoctrineEntityManagerFactory
 {
@@ -30,8 +30,8 @@ class DoctrineEntityManagerFactory
         $this->entityPaths      = $entityPaths;
         $this->connectionParams = $connectionParams;
 
-        if (!Type::hasType('GameStatusId')) {
-            Type::addType('GameStatusId', DoctrineGameStatusId::class);
+        if (!Type::hasType('SimulationStatusId')) {
+            Type::addType('SimulationStatusId', DoctrineSimulationStatusId::class);
         }
     }
 
