@@ -9,9 +9,5 @@ services:
     working_dir: /var/www/
     ports:
       - 9090:9090
-    networks:
-      game_of_life_hexagonal-network:
-        aliases:
-          - php-cli
     volumes:
       - .:/var/www
