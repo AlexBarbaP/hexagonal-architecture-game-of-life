@@ -15,7 +15,7 @@ abstract class AbstractSimulationConsoleCommand extends Command
     const ARGUMENT_WIDTH = 'width';
     const ARGUMENT_MAX_ITERATIONS = 'max_iterations';
 
-    const ITERATIONS_SLEEP_DELAY = 10000;
+    const ITERATIONS_SLEEP_DELAY = 100000;
 
     /**
      * @inheritdoc
