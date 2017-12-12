@@ -3,8 +3,11 @@ declare(strict_types=1);
 
 namespace Domain\Model;
 
+use Domain\Model\Entities\SimulationStatus;
+use Domain\Model\Entities\SimulationStatusId;
 use Domain\Model\PopulateStrategies\FixedPopulateStrategy;
 use Domain\Model\PopulateStrategies\PopulateStrategyInterface;
+use Domain\Model\Ports\SimulationStatusStoreInterface;
 use Domain\Model\Rules\DeadSimulationRule;
 use Domain\Model\Rules\PopulateSimulationRule;
 use Domain\Model\Rules\RuleInterface;
@@ -18,17 +21,26 @@ final class Simulation
     /** @var RuleInterface[] */
     private $rules;
 
+    /** @var SimulationStatusStoreInterface */
+    private $simulationStatusStore;
+
     /**
      * @param Size $size
      * @param PopulateStrategyInterface $populateStrategy
+     * @param SimulationStatusStoreInterface $simulationStatusStore
      */
     public function __construct(
         Size $size,
-        PopulateStrategyInterface $populateStrategy
+        PopulateStrategyInterface $populateStrategy,
+        SimulationStatusStoreInterface $simulationStatusStore
     ) {
+        $this->simulationStatusStore = $simulationStatusStore;
+
         $this->board = new Board($size, $populateStrategy);
 
         $this->addRules();
+
+        $this->storeInitialSimulationStatus();
     }
 
     /**
@@ -39,6 +51,19 @@ final class Simulation
         $this->rules[] = new DeadSimulationRule();
         $this->rules[] = new SurvivalSimulationRule();
         $this->rules[] = new PopulateSimulationRule();
+    }
+
+    /**
+     *
+     */
+    private function storeInitialSimulationStatus(): void
+    {
+        $simulationStatusId = SimulationStatusId::create();
+        $status             = serialize($this->board->toArray());
+
+        $simulationStatus = new SimulationStatus($simulationStatusId, $status);
+
+        $this->simulationStatusStore->save($simulationStatus);
     }
 
     /**
