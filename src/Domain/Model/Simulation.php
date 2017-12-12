@@ -68,3 +68,4 @@ final class Simulation
         return $this->board;
     }
 }
+
