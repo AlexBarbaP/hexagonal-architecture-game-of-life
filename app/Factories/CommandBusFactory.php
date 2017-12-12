@@ -36,7 +36,7 @@ class CommandBusFactory
         $inflector = new HandleInflector();
 
         // register commands
-        $initializeSimulationCommandHandler = new InitializeSimulationCommandHandler($simulationStatusRepository, $simulationStatusStore, $this->eventBus);
+        $initializeSimulationCommandHandler = new InitializeSimulationCommandHandler($simulationStatusRepository, $simulationStatusStore);
         $iterateSimulationCommandHandler    = new IterateSimulationCommandHandler($simulationStatusRepository, $simulationStatusStore);
         $simulationStatusQueryHandler       = new SimulationStatusQueryHandler($simulationStatusRepository, $simulationStatusStore);
 
