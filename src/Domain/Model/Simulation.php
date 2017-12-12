@@ -3,12 +3,16 @@ declare(strict_types=1);
 
 namespace Domain\Model;
 
+use Domain\Model\Entities\SimulationStatus;
+use Domain\Model\Entities\SimulationStatusId;
 use Domain\Model\PopulateStrategies\FixedPopulateStrategy;
 use Domain\Model\PopulateStrategies\PopulateStrategyInterface;
+use Domain\Model\Ports\SimulationStatusStoreInterface;
 use Domain\Model\Rules\DeadSimulationRule;
 use Domain\Model\Rules\PopulateSimulationRule;
 use Domain\Model\Rules\RuleInterface;
 use Domain\Model\Rules\SurvivalSimulationRule;
+use Infrastructure\InMemory\StoreInterfaceAdapters\InMemorySimulationStatusStoreAdapter;
 
 final class Simulation
 {
@@ -18,17 +22,38 @@ final class Simulation
     /** @var RuleInterface[] */
     private $rules;
 
+    /** @var SimulationStatusStoreInterface */
+    private $simulationStatusStore;
+
     /**
      * @param Size $size
      * @param PopulateStrategyInterface $populateStrategy
+     * @param SimulationStatusStoreInterface $simulationStatusStore
      */
     public function __construct(
         Size $size,
-        PopulateStrategyInterface $populateStrategy
+        PopulateStrategyInterface $populateStrategy,
+        SimulationStatusStoreInterface $simulationStatusStore
     ) {
+        $this->simulationStatusStore = $simulationStatusStore;
+
         $this->board = new Board($size, $populateStrategy);
 
         $this->addRules();
+
+        $this->storeInitialSimulationStatus();
+    }
+
+    /**
+     *
+     */
+    public function iterate(): void
+    {
+        $newGrid = $this->iterateBoard($this->getBoard()->getGrid());
+
+        $fixedPopulateStrategy = new FixedPopulateStrategy($newGrid);
+
+        $this->board = new Board($this->board->getSize(), $fixedPopulateStrategy);
     }
 
     /**
@@ -44,13 +69,14 @@ final class Simulation
     /**
      *
      */
-    public function iterate(): void
+    private function storeInitialSimulationStatus(): void
     {
-        $newGrid = $this->iterateBoard($this->getBoard()->getGrid());
+        $simulationStatusId = SimulationStatusId::create();
+        $status       = serialize($this->board->toArray());
 
-        $fixedPopulateStrategy = new FixedPopulateStrategy($newGrid);
+        $simulationStatus = new SimulationStatus($simulationStatusId, $status);
 
-        $this->board = new Board($this->board->getSize(), $fixedPopulateStrategy);
+        $this->simulationStatusStore->save($simulationStatus);
     }
 
     /**

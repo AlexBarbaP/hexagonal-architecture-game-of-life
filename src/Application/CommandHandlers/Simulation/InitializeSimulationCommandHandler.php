@@ -39,7 +39,7 @@ class InitializeSimulationCommandHandler
         $size             = new Size($command->height(), $command->width());
         $populateStrategy = $command->populateStrategy();
 
-        $simulation = new Simulation($size, $populateStrategy);
+        $simulation = new Simulation($size, $populateStrategy, $this->simulationStatusStore);
 
         return $simulation;
     }

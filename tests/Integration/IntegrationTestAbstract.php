@@ -5,7 +5,6 @@ namespace Tests\Integration;
 
 use Application\Config\Config;
 use Application\Factories\CommandBusFactory;
-use Application\Factories\EventBusFactory;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Loader;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
@@ -13,7 +12,6 @@ use Doctrine\ORM\EntityManager;
 use Infrastructure\Doctrine\DoctrineEntityManagerFactory;
 use Infrastructure\Doctrine\RepositoryInterfaceAdapters\DoctrineSimulationStatusRepositoryAdapter;
 use Infrastructure\Doctrine\StoreInterfaceAdapters\DoctrineSimulationStatusStoreAdapter;
-use League\Event\EmitterInterface;
 use League\Tactician\CommandBus;
 use PHPUnit\Framework\TestCase;
 use Tests\Integration\Fixtures\DoctrineSimulationStatusFixtureLoader;
