@@ -3,16 +3,10 @@ declare(strict_types=1);
 
 namespace Application;
 
-use Application\Commands\Simulation\InitializeSimulationCommand;
-use Application\Commands\Simulation\IterateSimulationCommand;
 use Application\Exceptions\InvalidInputException;
-use Application\Factories\CommandBusFactory;
-use Application\Queries\Simulation\SimulationStatusQuery;
-use Domain\Model\Board;
 use Domain\Model\PopulateStrategies\RandomPopulateStrategy;
 use Domain\Model\Simulation;
 use Domain\Model\Size;
-use League\Tactician\CommandBus;
 use PHPUnit\Runner\Exception;
 
 class Application
@@ -31,9 +25,6 @@ class Application
 
     /** @var int */
     private $currentIteration = 0;
-
-    /** @var CommandBus */
-    private $commandBus;
 
     /** @var Simulation */
     private $simulation;
@@ -54,20 +45,6 @@ class Application
         $this->outputParser   = $outputParser;
         $this->inputValidator = $inputValidator;
         $this->iterations     = $iterations;
-
-        $this->commandBus = $this->getCommandBus();
-    }
-
-    /**
-     * @return CommandBus
-     */
-    private function getCommandBus(): CommandBus
-    {
-        $commandBusFactory = new CommandBusFactory();
-
-        $commandBus = $commandBusFactory->create();
-
-        return $commandBus;
     }
 
     /**
@@ -101,9 +78,7 @@ class Application
     {
         $populateStrategy = new RandomPopulateStrategy();
 
-        $initializeSimulationCommand = new InitializeSimulationCommand($size->getHeight(), $size->getWidth(), $populateStrategy);
-
-        $simulation = $this->commandBus->handle($initializeSimulationCommand);
+        $simulation = new Simulation($size, $populateStrategy);
 
         return $simulation;
     }
@@ -113,9 +88,7 @@ class Application
      */
     public function iterate(): void
     {
-        $iterateSimulationCommand = new IterateSimulationCommand($this->simulation);
-
-        $this->simulation = $this->commandBus->handle($iterateSimulationCommand);
+        $this->simulation->iterate();
 
         $this->currentIteration++;
     }
@@ -143,10 +116,7 @@ class Application
      */
     public function getBoardStatus(): string
     {
-        $simulationStatusQuery = new SimulationStatusQuery($this->simulation);
-
-        /** @var Board $board */
-        $board = $this->commandBus->handle($simulationStatusQuery);
+        $board = $this->simulation->getBoard();
 
         $simulationBoardGrid = $this->outputParser->parse($board);
 
