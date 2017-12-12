@@ -18,21 +18,17 @@ class SimulationTest extends TestCase
 
         $height = count($grid);
         $width  = count($grid[0]);
-        $size   = new Size($height, $width);
 
-        $coordinate = new Coordinate($data['coordinates'][0], $data['coordinates'][1]);
+        $x = $data['coordinates'][0];
+        $y = $data['coordinates'][1];
 
-        $fixedPopulateStrategy = new FixedPopulateStrategy($grid);
-
-        $eventBus = new MockEmitterAdapter();
-
-        $simulation = new Simulation($size, $fixedPopulateStrategy, $eventBus);
+        $simulation = new Simulation($height, $width);
 
         $simulation->iterate();
 
-        $cellNewStatus = $simulation->getBoard()->getCell($coordinate)->getCellStatus();
+        $cellNewStatus = $simulation->getBoard()->getCell($x, $y)->getCellStatus();
 
-        $this->assertEquals(Cell::UNPOPULATED, $cellNewStatus());
+        $this->assertEquals(Cell::UNPOPULATED, $cellNewStatus);
     }
 
     public function solitudeUseCaseDataProvider()
