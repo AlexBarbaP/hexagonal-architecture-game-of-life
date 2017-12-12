@@ -3,32 +3,17 @@ declare(strict_types=1);
 
 namespace Domain\Model;
 
-use Domain\Model\PopulateStrategies\FixedPopulateStrategy;
-use Domain\Model\PopulateStrategies\PopulateStrategyInterface;
-use Domain\Model\Rules\DeadSimulationRule;
-use Domain\Model\Rules\PopulateSimulationRule;
-use Domain\Model\Rules\RuleInterface;
-use Domain\Model\Rules\SurvivalSimulationRule;
-
 final class Simulation
 {
     /** @var Board */
     private $board;
 
-    /** @var RuleInterface[] */
-    private $rules;
-
     /**
-     * @param Size                      $size
-     * @param PopulateStrategyInterface $populateStrategy
+     * @param Size $size
      */
-    public function __construct(
-        Size $size,
-        PopulateStrategyInterface $populateStrategy
-    ) {
-        $this->board = new Board($size, $populateStrategy);
-
-        $this->addRules();
+    public function __construct(Size $size)
+    {
+        $this->board = new Board($size);
     }
 
     /**
@@ -38,37 +23,7 @@ final class Simulation
     {
         $newGrid = $this->iterateBoard($this->getBoard()->getGrid());
 
-        $fixedPopulateStrategy = new FixedPopulateStrategy($newGrid);
-
-        $this->board = new Board($this->board->getSize(), $fixedPopulateStrategy);
-    }
-
-    /**
-     * @return Board
-     */
-    public function getBoard(): Board
-    {
-        return $this->board;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isCompleted(): bool
-    {
-        $anyPopulatedCell = $this->getBoard()->isAnyPopulatedCell();
-
-        return !$anyPopulatedCell;
-    }
-
-    /**
-     *
-     */
-    private function addRules(): void
-    {
-        $this->rules[] = new DeadSimulationRule();
-        $this->rules[] = new SurvivalSimulationRule();
-        $this->rules[] = new PopulateSimulationRule();
+        $this->board = $this->board->setGrid($newGrid);
     }
 
     /**
@@ -76,7 +31,7 @@ final class Simulation
      *
      * @return array
      */
-    private function iterateBoard(array $grid): array
+    private function iterateBoard(array &$grid): array
     {
         $newGrid = [];
 
@@ -85,9 +40,11 @@ final class Simulation
 
             /** @var Cell $cell */
             foreach ($row as $cell) {
+                $coordinate = $cell->getCoordinate();
+
                 $nextIterationCellStatus = $this->getNextIterationCellStatus($cell);
 
-                $newGrid[count($newGrid) - 1][] = $nextIterationCellStatus();
+                $newGrid[count($newGrid) - 1][] = new Cell($coordinate, $nextIterationCellStatus);
             }
         }
 
@@ -101,31 +58,14 @@ final class Simulation
      */
     private function getNextIterationCellStatus(Cell $cell): CellStatus
     {
-        $cellCurrentStatus = $cell->getCellStatus();
-
-        $cellNeighbors = $this->board->getNeighbors($cell->getCoordinate());
-
-        $newCellStatus = $this->executeRules($cellCurrentStatus, $cellNeighbors);
-
-        return $newCellStatus;
+        return new CellStatus(Cell::UNPOPULATED);
     }
 
     /**
-     * @param CellStatus $cellStatus
-     * @param int        $cellNeighbors
-     *
-     * @return CellStatus
+     * @return Board
      */
-    private function executeRules(CellStatus $cellStatus, int $cellNeighbors): CellStatus
+    public function getBoard(): Board
     {
-        foreach ($this->rules as $rule) {
-            if ($rule->match($cellStatus, $cellNeighbors)) {
-                $newCellStatus = $rule->execute();
-
-                return $newCellStatus;
-            }
-        }
-
-        return $cellStatus;
+        return $this->board;
     }
 }
