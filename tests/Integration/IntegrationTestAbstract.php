@@ -38,9 +38,6 @@ class IntegrationTestAbstract extends TestCase
     /** @var CommandBus */
     protected $commandBus;
 
-    /** @var EmitterInterface */
-    protected $eventBus;
-
     /**
      * @inheritdoc
      */
@@ -67,8 +64,6 @@ class IntegrationTestAbstract extends TestCase
 
         $this->fixturesLoader();
 
-        $this->setupEventBus();
-
         $this->setupCommandBus();
     }
 
@@ -88,22 +83,11 @@ class IntegrationTestAbstract extends TestCase
     /**
      *
      */
-    private function setupEventBus(): void
-    {
-        $eventBusFactory = new EventBusFactory($this->doctrineSimulationStatusStore);
-
-        $this->eventBus = $eventBusFactory->create();
-    }
-
-    /**
-     *
-     */
     private function setupCommandBus(): void
     {
         $commandBusFactory = new CommandBusFactory(
             $this->doctrineSimulationStatusRepository,
-            $this->doctrineSimulationStatusStore,
-            $this->eventBus
+            $this->doctrineSimulationStatusStore
         );
 
         $this->commandBus = $commandBusFactory->create();

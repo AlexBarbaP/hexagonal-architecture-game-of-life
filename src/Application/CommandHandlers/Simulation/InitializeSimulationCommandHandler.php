@@ -8,7 +8,6 @@ use Domain\Model\Ports\SimulationStatusRepositoryInterface;
 use Domain\Model\Ports\SimulationStatusStoreInterface;
 use Domain\Model\Simulation;
 use Domain\Model\Size;
-use League\Event\EmitterInterface;
 
 class InitializeSimulationCommandHandler
 {
@@ -18,22 +17,16 @@ class InitializeSimulationCommandHandler
     /** @var SimulationStatusStoreInterface */
     private $simulationStatusStore;
 
-    /** @var EmitterInterface */
-    private $emitter;
-
     /**
      * @param SimulationStatusRepositoryInterface $simulationStatusRepository
-     * @param SimulationStatusStoreInterface      $simulationStatusStore
-     * @param EmitterInterface                    $emitter
+     * @param SimulationStatusStoreInterface $simulationStatusStore
      */
     public function __construct(
         SimulationStatusRepositoryInterface $simulationStatusRepository,
-        SimulationStatusStoreInterface $simulationStatusStore,
-        EmitterInterface $emitter
+        SimulationStatusStoreInterface $simulationStatusStore
     ) {
         $this->simulationStatusRepository = $simulationStatusRepository;
         $this->simulationStatusStore      = $simulationStatusStore;
-        $this->emitter                    = $emitter;
     }
 
     /**
@@ -46,7 +39,7 @@ class InitializeSimulationCommandHandler
         $size             = new Size($command->height(), $command->width());
         $populateStrategy = $command->populateStrategy();
 
-        $simulation = new Simulation($size, $populateStrategy, $this->emitter);
+        $simulation = new Simulation($size, $populateStrategy);
 
         return $simulation;
     }

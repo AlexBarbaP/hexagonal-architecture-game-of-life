@@ -11,7 +11,6 @@ use Application\Queries\Simulation\SimulationStatusQuery;
 use Application\QueryHandlers\Simulation\SimulationStatusQueryHandler;
 use Domain\Model\Ports\SimulationStatusRepositoryInterface;
 use Domain\Model\Ports\SimulationStatusStoreInterface;
-use League\Event\EmitterInterface;
 use League\Tactician\CommandBus;
 use League\Tactician\Handler\CommandHandlerMiddleware;
 use League\Tactician\Handler\CommandNameExtractor\ClassNameExtractor;
@@ -23,21 +22,15 @@ class CommandBusFactory
     /** @var CommandBus */
     private $commandBus;
 
-    /** @var EmitterInterface */
-    private $eventBus;
-
     /**
      * @param SimulationStatusRepositoryInterface $simulationStatusRepository
-     * @param SimulationStatusStoreInterface      $simulationStatusStore
-     * @param EmitterInterface                    $eventBus
+     * @param SimulationStatusStoreInterface $simulationStatusStore
      */
     public function __construct(
         SimulationStatusRepositoryInterface $simulationStatusRepository,
-        SimulationStatusStoreInterface $simulationStatusStore,
-        EmitterInterface $eventBus
-    ) {
-        $this->eventBus = $eventBus;
-
+        SimulationStatusStoreInterface $simulationStatusStore
+    )
+    {
         $nameExtractor = new ClassNameExtractor();
 
         $inflector = new HandleInflector();

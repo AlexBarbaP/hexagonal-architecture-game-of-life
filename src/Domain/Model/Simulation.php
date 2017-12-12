@@ -3,15 +3,12 @@ declare(strict_types=1);
 
 namespace Domain\Model;
 
-use Domain\Model\Events\SimulationInitializedEvent;
 use Domain\Model\PopulateStrategies\FixedPopulateStrategy;
 use Domain\Model\PopulateStrategies\PopulateStrategyInterface;
 use Domain\Model\Rules\DeadSimulationRule;
 use Domain\Model\Rules\PopulateSimulationRule;
 use Domain\Model\Rules\RuleInterface;
 use Domain\Model\Rules\SurvivalSimulationRule;
-use League\Event\EmitterInterface;
-use Ramsey\Uuid\Uuid;
 
 final class Simulation
 {
@@ -21,28 +18,27 @@ final class Simulation
     /** @var RuleInterface[] */
     private $rules;
 
-    /** @var EmitterInterface */
-    private $eventBus;
-
     /**
-     * @param Size                      $size
+     * @param Size $size
      * @param PopulateStrategyInterface $populateStrategy
-     * @param EmitterInterface          $eventBus
      */
     public function __construct(
         Size $size,
-        PopulateStrategyInterface $populateStrategy,
-        EmitterInterface $eventBus
+        PopulateStrategyInterface $populateStrategy
     ) {
-        $this->eventBus = $eventBus;
-
         $this->board = new Board($size, $populateStrategy);
 
         $this->addRules();
+    }
 
-        $event = new SimulationInitializedEvent(Uuid::uuid4()->toString(), $this->getBoard());
-
-        $this->eventBus->emit($event);
+    /**
+     *
+     */
+    private function addRules(): void
+    {
+        $this->rules[] = new DeadSimulationRule();
+        $this->rules[] = new SurvivalSimulationRule();
+        $this->rules[] = new PopulateSimulationRule();
     }
 
     /**
@@ -55,34 +51,6 @@ final class Simulation
         $fixedPopulateStrategy = new FixedPopulateStrategy($newGrid);
 
         $this->board = new Board($this->board->getSize(), $fixedPopulateStrategy);
-    }
-
-    /**
-     * @return Board
-     */
-    public function getBoard(): Board
-    {
-        return $this->board;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isCompleted(): bool
-    {
-        $anyPopulatedCell = $this->getBoard()->isAnyPopulatedCell();
-
-        return !$anyPopulatedCell;
-    }
-
-    /**
-     *
-     */
-    private function addRules(): void
-    {
-        $this->rules[] = new DeadSimulationRule();
-        $this->rules[] = new SurvivalSimulationRule();
-        $this->rules[] = new PopulateSimulationRule();
     }
 
     /**
@@ -126,7 +94,7 @@ final class Simulation
 
     /**
      * @param CellStatus $cellStatus
-     * @param int        $cellNeighbors
+     * @param int $cellNeighbors
      *
      * @return CellStatus
      */
@@ -141,5 +109,23 @@ final class Simulation
         }
 
         return $cellStatus;
+    }
+
+    /**
+     * @return Board
+     */
+    public function getBoard(): Board
+    {
+        return $this->board;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCompleted(): bool
+    {
+        $anyPopulatedCell = $this->getBoard()->isAnyPopulatedCell();
+
+        return !$anyPopulatedCell;
     }
 }
