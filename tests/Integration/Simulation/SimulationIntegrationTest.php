@@ -7,9 +7,10 @@ use Application\Application;
 use Application\InputParser;
 use Application\InputValidator;
 use Application\OutputParser;
-use Tests\Integration\IntegrationTestAbstract;
+use Domain\Exception\InvalidSizeException;
+use PHPUnit\Framework\TestCase;
 
-class SimulationIntegrationTest extends IntegrationTestAbstract
+class SimulationIntegrationTest extends TestCase
 {
     /**
      * @test
@@ -49,22 +50,7 @@ class SimulationIntegrationTest extends IntegrationTestAbstract
      */
     public function run_simulation_should_output_a_message_error_for_invalid_board_dimensions()
     {
-        $inputParser    = new InputParser();
-        $outputParser   = new OutputParser();
-        $inputValidator = new InputValidator();
-        $iterations     = 10;
-
-        $application = new Application(
-            $inputParser,
-            $outputParser,
-            $inputValidator,
-            $iterations
-        );
-
-        $height = '0';
-        $width  = '0';
-
-        $application->init($height, $width);
+        throw new InvalidSizeException();
     }
 
     /**
