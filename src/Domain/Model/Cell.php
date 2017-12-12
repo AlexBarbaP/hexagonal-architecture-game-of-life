@@ -11,25 +11,12 @@ final class Cell
     /** @var CellStatus */
     private $cellStatus;
 
-    /** @var Coordinate */
-    private $coordinate;
-
     /**
-     * @param Coordinate $coordinate
      * @param CellStatus $cellStatus
      */
-    public function __construct(Coordinate $coordinate, CellStatus $cellStatus)
+    public function __construct(CellStatus $cellStatus)
     {
-        $this->coordinate = clone $coordinate;
         $this->cellStatus = clone $cellStatus;
-    }
-
-    /**
-     * @return Coordinate
-     */
-    public function getCoordinate(): Coordinate
-    {
-        return clone $this->coordinate;
     }
 
     /**

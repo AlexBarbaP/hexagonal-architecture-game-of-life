@@ -4,10 +4,7 @@ declare(strict_types=1);
 namespace Tests\Domain\Model;
 
 use Domain\Model\Cell;
-use Domain\Model\Coordinate;
-use Domain\Model\PopulateStrategies\FixedPopulateStrategy;
 use Domain\Model\Simulation;
-use Domain\Model\Size;
 use PHPUnit\Framework\TestCase;
 
 class SimulationTest extends TestCase
@@ -23,17 +20,15 @@ class SimulationTest extends TestCase
 
         $height = count($grid);
         $width  = count($grid[0]);
-        $size   = new Size($height, $width);
 
-        $coordinate = new Coordinate($data['coordinates'][0], $data['coordinates'][1]);
+        $x = $data['coordinates'][0];
+        $y = $data['coordinates'][1];
 
-        $fixedPopulateStrategy = new FixedPopulateStrategy($grid);
-
-        $simulation = new Simulation($size, $fixedPopulateStrategy);
+        $simulation = new Simulation($height, $width);
 
         $simulation->iterate();
 
-        $cellNewStatus = $simulation->getBoard()->getCell($coordinate)->getCellStatus();
+        $cellNewStatus = $simulation->getBoard()->getCell($x, $y)->getCellStatus();
 
         $this->assertEquals(Cell::UNPOPULATED, $cellNewStatus());
     }
