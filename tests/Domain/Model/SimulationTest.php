@@ -8,7 +8,6 @@ use Domain\Model\Coordinate;
 use Domain\Model\PopulateStrategies\FixedPopulateStrategy;
 use Domain\Model\Simulation;
 use Domain\Model\Size;
-use Infrastructure\InMemory\StoreInterfaceAdapters\InMemorySimulationStatusStoreAdapter;
 use PHPUnit\Framework\TestCase;
 
 class SimulationTest extends TestCase
@@ -376,9 +375,7 @@ class SimulationTest extends TestCase
 
         $size = new Size(count($grid), count($grid[0]));
 
-        $inMemorySimulationStatusStoreAdapter = new InMemorySimulationStatusStoreAdapter();
-
-        $simulation = new Simulation($size, $fixedPopulateStrategy, $inMemorySimulationStatusStoreAdapter);
+        $simulation = new Simulation($size, $fixedPopulateStrategy);
 
         $isCompleted = $simulation->isCompleted();
 
@@ -438,9 +435,7 @@ class SimulationTest extends TestCase
     {
         $fixedPopulateStrategy = new FixedPopulateStrategy($grid);
 
-        $inMemorySimulationStatusStoreAdapter = new InMemorySimulationStatusStoreAdapter();
-
-        $simulation = new Simulation($size, $fixedPopulateStrategy, $inMemorySimulationStatusStoreAdapter);
+        $simulation = new Simulation($size, $fixedPopulateStrategy);
 
         $simulation->iterate();
 

@@ -43,13 +43,10 @@ class RandomSimulationConsoleCommand extends AbstractSimulationConsoleCommand
 
         try {
             $application = new Application(
-                $this->simulationStatusRepository,
-                $this->simulationStatusStore,
                 $inputParser,
                 $outputParser,
                 $inputValidator,
-                $argumentIterations ?: 0,
-                null
+                $argumentIterations ?: 0
             );
 
             $application->init($argumentHeight, $argumentWidth);
