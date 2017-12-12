@@ -5,7 +5,6 @@ namespace Tests\Domain\Model;
 
 use Domain\Model\Cell;
 use Domain\Model\Coordinate;
-use Domain\Model\PopulateStrategies\FixedPopulateStrategy;
 use Domain\Model\Simulation;
 use Domain\Model\Size;
 use PHPUnit\Framework\TestCase;
@@ -27,9 +26,7 @@ class SimulationTest extends TestCase
 
         $coordinate = new Coordinate($data['coordinates'][0], $data['coordinates'][1]);
 
-        $fixedPopulateStrategy = new FixedPopulateStrategy($grid);
-
-        $simulation = new Simulation($size, $fixedPopulateStrategy);
+        $simulation = new Simulation($size);
 
         $simulation->iterate();
 
@@ -41,18 +38,18 @@ class SimulationTest extends TestCase
     public function solitudeUseCaseDataProvider()
     {
         return [
-            'Size two, neighbors zero'   => [
+            'Size two, neighbors zero' => [
                 [
-                    'grid'        => [
+                    'grid' => [
                         [1, 0],
                         [0, 0],
                     ],
                     'coordinates' => [0, 0],
                 ],
             ],
-            'Size two, neighbors one'    => [
+            'Size two, neighbors one' => [
                 [
-                    'grid'        => [
+                    'grid' => [
                         [1, 0],
                         [0, 1],
                     ],
@@ -61,7 +58,7 @@ class SimulationTest extends TestCase
             ],
             'Size three, neighbors zero' => [
                 [
-                    'grid'        => [
+                    'grid' => [
                         [0, 0, 0],
                         [0, 1, 0],
                         [0, 0, 0],
@@ -69,9 +66,9 @@ class SimulationTest extends TestCase
                     'coordinates' => [1, 1],
                 ],
             ],
-            'Size three, neighbors one'  => [
+            'Size three, neighbors one' => [
                 [
-                    'grid'        => [
+                    'grid' => [
                         [0, 0, 1],
                         [0, 1, 0],
                         [0, 0, 0],
