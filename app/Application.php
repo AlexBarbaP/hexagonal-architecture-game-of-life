@@ -8,13 +8,8 @@ use Application\Commands\Simulation\IterateSimulationCommand;
 use Application\Exceptions\InvalidInputException;
 use Application\Factories\CommandBusFactory;
 use Application\Queries\Simulation\SimulationStatusQuery;
-use Domain\Exception\EntityNotFoundException;
 use Domain\Model\Board;
-use Domain\Model\Entities\SimulationStatusId;
-use Domain\Model\PopulateStrategies\FixedPopulateStrategy;
 use Domain\Model\PopulateStrategies\RandomPopulateStrategy;
-use Domain\Model\Ports\SimulationStatusRepositoryInterface;
-use Domain\Model\Ports\SimulationStatusStoreInterface;
 use Domain\Model\Simulation;
 use Domain\Model\Size;
 use League\Tactician\CommandBus;
@@ -22,12 +17,6 @@ use PHPUnit\Runner\Exception;
 
 class Application
 {
-    /** @var SimulationStatusRepositoryInterface */
-    private $simulationStatusRepository;
-
-    /** @var SimulationStatusStoreInterface */
-    private $simulationStatusStore;
-
     /** @var InputParserInterface */
     private $inputParser;
 
@@ -40,9 +29,6 @@ class Application
     /** @var int */
     private $iterations;
 
-    /** @var SimulationStatusId */
-    private $simulationStatusId;
-
     /** @var int */
     private $currentIteration = 0;
 
@@ -53,30 +39,21 @@ class Application
     private $simulation;
 
     /**
-     * @param SimulationStatusRepositoryInterface $simulationStatusRepository
-     * @param SimulationStatusStoreInterface $simulationStatusStore
      * @param InputParserInterface $inputParser
      * @param OutputParserInterface $outputParser
      * @param ValidatorInterface $inputValidator
      * @param int $iterations
-     * @param SimulationStatusId $simulationStatusId
      */
     public function __construct(
-        SimulationStatusRepositoryInterface $simulationStatusRepository,
-        SimulationStatusStoreInterface $simulationStatusStore,
         InputParserInterface $inputParser,
         OutputParserInterface $outputParser,
         ValidatorInterface $inputValidator,
-        int $iterations,
-        SimulationStatusId $simulationStatusId = null
+        int $iterations
     ) {
-        $this->simulationStatusRepository = $simulationStatusRepository;
-        $this->simulationStatusStore      = $simulationStatusStore;
-        $this->inputParser                = $inputParser;
-        $this->outputParser               = $outputParser;
-        $this->inputValidator             = $inputValidator;
-        $this->iterations                 = $iterations;
-        $this->simulationStatusId         = $simulationStatusId;
+        $this->inputParser    = $inputParser;
+        $this->outputParser   = $outputParser;
+        $this->inputValidator = $inputValidator;
+        $this->iterations     = $iterations;
 
         $this->commandBus = $this->getCommandBus();
     }
@@ -86,10 +63,7 @@ class Application
      */
     private function getCommandBus(): CommandBus
     {
-        $commandBusFactory = new CommandBusFactory(
-            $this->simulationStatusRepository,
-            $this->simulationStatusStore
-        );
+        $commandBusFactory = new CommandBusFactory();
 
         $commandBus = $commandBusFactory->create();
 
@@ -99,8 +73,6 @@ class Application
     /**
      * @param string $height
      * @param string $width
-     *
-     * @throws EntityNotFoundException
      */
     public function init(string $height, string $width): void
     {
@@ -122,20 +94,12 @@ class Application
 
     /**
      * @param Size $size
-     * @return Simulation
      *
-     * @throws EntityNotFoundException
+     * @return Simulation
      */
     private function initializeSimulation(Size $size): Simulation
     {
-        if (is_null($this->simulationStatusId)) {
-            $populateStrategy = new RandomPopulateStrategy();
-        } else {
-            $gridStatus      = $this->simulationStatusRepository->find($this->simulationStatusId);
-            $gridStatusArray = unserialize($gridStatus->getStatus());
-
-            $populateStrategy = new FixedPopulateStrategy($gridStatusArray);
-        }
+        $populateStrategy = new RandomPopulateStrategy();
 
         $initializeSimulationCommand = new InitializeSimulationCommand($size->getHeight(), $size->getWidth(), $populateStrategy);
 

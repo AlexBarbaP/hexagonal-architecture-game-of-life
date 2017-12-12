@@ -7,7 +7,6 @@ declare(strict_types=1);
 
 require __DIR__ . '/vendor/autoload.php';
 
-use Application\ConsoleCommands\DatabaseSimulationConsoleCommand;
 use Application\ConsoleCommands\RandomSimulationConsoleCommand;
 use Symfony\Component\Console\Application;
 
@@ -15,11 +14,9 @@ use Symfony\Component\Console\Application;
 $application = new Application('Simulation of Life - Hexagonal Architecture', '1.0.0');
 
 // create and register ConsoleCommands
-$simulationConsoleCommand         = new RandomSimulationConsoleCommand();
-$databaseSimulationConsoleCommand = new DatabaseSimulationConsoleCommand();
+$simulationConsoleCommand = new RandomSimulationConsoleCommand();
 
 $application->add($simulationConsoleCommand);
-$application->add($databaseSimulationConsoleCommand);
 
 // run application
 try {
