@@ -8,7 +8,6 @@ use Domain\Model\Coordinate;
 use Domain\Model\PopulateStrategies\FixedPopulateStrategy;
 use Domain\Model\Simulation;
 use Domain\Model\Size;
-use Infrastructure\InMemory\EmitterAdapters\MockEmitterAdapter;
 use PHPUnit\Framework\TestCase;
 
 class SimulationTest extends TestCase
@@ -374,11 +373,9 @@ class SimulationTest extends TestCase
     {
         $fixedPopulateStrategy = new FixedPopulateStrategy($grid);
 
-        $eventBus = new MockEmitterAdapter();
-
         $size = new Size(count($grid), count($grid[0]));
 
-        $simulation = new Simulation($size, $fixedPopulateStrategy, $eventBus);
+        $simulation = new Simulation($size, $fixedPopulateStrategy);
 
         $isCompleted = $simulation->isCompleted();
 
@@ -438,9 +435,7 @@ class SimulationTest extends TestCase
     {
         $fixedPopulateStrategy = new FixedPopulateStrategy($grid);
 
-        $eventBus = new MockEmitterAdapter();
-
-        $simulation = new Simulation($size, $fixedPopulateStrategy, $eventBus);
+        $simulation = new Simulation($size, $fixedPopulateStrategy);
 
         $simulation->iterate();
 
