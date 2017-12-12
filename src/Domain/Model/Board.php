@@ -7,16 +7,12 @@ use Domain\Exception\InvalidSizeException;
 
 final class Board
 {
-    /** @var array */
-    private $grid = [];
-
     /**
      * @param int $height
      * @param int $width
      */
     public function __construct(int $height, int $width)
     {
-        $this->grid = $this->initializeEmptyGrid($height, $width);
     }
 
     /**
@@ -29,13 +25,6 @@ final class Board
      */
     public function getCell(int $x, int $y): Cell
     {
-        if (!isset($this->grid[$y]) || !isset($this->grid[$y][$x])) {
-            throw new InvalidSizeException();
-        }
-
-        $cell = $this->grid[$y][$x];
-
-        return $cell;
     }
 
     /**
@@ -43,7 +32,6 @@ final class Board
      */
     public function getGrid(): array
     {
-        return $this->grid;
     }
 
     /**
@@ -53,29 +41,5 @@ final class Board
      */
     public function setGrid(array $grid): Board
     {
-        $this->grid = $grid;
-
-        return $this;
-    }
-
-    /**
-     * @param int $height
-     * @param int $width
-     *
-     * @return array
-     */
-    private function initializeEmptyGrid(int $height, int $width): array
-    {
-        $grid = $this->grid;
-
-        for ($y = 0; $y < $height; $y++) {
-            $grid[] = [];
-
-            for ($x = 0; $x < $width; $x++) {
-                $grid[$y][$x] = new Cell(new CellStatus(Cell::UNPOPULATED));
-            }
-        }
-
-        return $grid;
     }
 }

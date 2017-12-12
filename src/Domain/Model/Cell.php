@@ -8,15 +8,11 @@ final class Cell
     public const UNPOPULATED = 0;
     public const POPULATED = 1;
 
-    /** @var CellStatus */
-    private $cellStatus;
-
     /**
      * @param CellStatus $cellStatus
      */
     public function __construct(CellStatus $cellStatus)
     {
-        $this->cellStatus = clone $cellStatus;
     }
 
     /**
@@ -24,6 +20,5 @@ final class Cell
      */
     public function getCellStatus(): CellStatus
     {
-        return clone $this->cellStatus;
     }
 }
