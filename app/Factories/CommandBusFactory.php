@@ -5,12 +5,12 @@ namespace Application\Factories;
 
 use Application\CommandHandlers\Simulation\InitializeSimulationCommandHandler;
 use Application\CommandHandlers\Simulation\IterateSimulationCommandHandler;
-use Application\Commands\Simulation\InitializeSimulationCommand;
-use Application\Commands\Simulation\IterateSimulationCommand;
-use Application\Queries\Simulation\SimulationStatusQuery;
 use Application\QueryHandlers\Simulation\SimulationStatusQueryHandler;
+use Domain\Model\Commands\Simulation\InitializeSimulationCommand;
+use Domain\Model\Commands\Simulation\IterateSimulationCommand;
 use Domain\Model\Ports\SimulationStatusRepositoryInterface;
 use Domain\Model\Ports\SimulationStatusStoreInterface;
+use Domain\Model\Queries\Simulation\SimulationStatusQuery;
 use League\Event\EmitterInterface;
 use League\Tactician\CommandBus;
 use League\Tactician\Handler\CommandHandlerMiddleware;

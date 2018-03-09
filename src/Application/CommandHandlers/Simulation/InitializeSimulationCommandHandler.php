@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Application\CommandHandlers\Simulation;
 
-use Application\Commands\Simulation\InitializeSimulationCommand;
+use Domain\Model\Commands\Simulation\InitializeSimulationCommand;
 use Domain\Model\Ports\SimulationStatusRepositoryInterface;
 use Domain\Model\Ports\SimulationStatusStoreInterface;
 use Domain\Model\Simulation;

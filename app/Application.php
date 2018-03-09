@@ -3,19 +3,19 @@ declare(strict_types=1);
 
 namespace Application;
 
-use Application\Commands\Simulation\InitializeSimulationCommand;
-use Application\Commands\Simulation\IterateSimulationCommand;
 use Application\Exceptions\InvalidInputException;
 use Application\Factories\CommandBusFactory;
 use Application\Factories\EventBusFactory;
-use Application\Queries\Simulation\SimulationStatusQuery;
 use Domain\Exception\EntityNotFoundException;
 use Domain\Model\Board;
+use Domain\Model\Commands\Simulation\InitializeSimulationCommand;
+use Domain\Model\Commands\Simulation\IterateSimulationCommand;
 use Domain\Model\Entities\SimulationStatusId;
 use Domain\Model\PopulateStrategies\FixedPopulateStrategy;
 use Domain\Model\PopulateStrategies\RandomPopulateStrategy;
 use Domain\Model\Ports\SimulationStatusRepositoryInterface;
 use Domain\Model\Ports\SimulationStatusStoreInterface;
+use Domain\Model\Queries\Simulation\SimulationStatusQuery;
 use Domain\Model\Simulation;
 use Domain\Model\Size;
 use League\Event\EmitterInterface;

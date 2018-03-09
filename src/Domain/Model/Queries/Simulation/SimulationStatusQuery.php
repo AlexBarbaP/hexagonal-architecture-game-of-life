@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Application\Commands\Simulation;
+namespace Domain\Model\Queries\Simulation;
 
 use Domain\Model\Simulation;
 
-class IterateSimulationCommand
+class SimulationStatusQuery
 {
     /** @var Simulation */
     private $simulation;
