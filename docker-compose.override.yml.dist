@@ -12,3 +12,8 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=gol_hexagonal
       - MASTER_PASSWORD=repl_password
+  apache:
+    environment:
+      - APP_DOMAIN=vhost-app-name
+      - APP_DOC_ROOT=/var/www/public
+      - APACHE_SERVERNAME=apache-servername

@@ -46,6 +46,20 @@ services:
           - mysql-slave
         ipv4_address: 172.71.0.102
 
+  php:
+    build: docker/php
+    working_dir: /var/www/
+    ports:
+      - 9091:9090
+    expose:
+      - 9000
+    networks:
+      game_of_life_hexagonal-network:
+        aliases:
+          - php
+    volumes:
+      - .:/var/www
+
   # container usage:
   #  docker-compose run testing /var/www/vendor/bin/phpunit
   cli:
@@ -72,3 +86,24 @@ services:
     volumes:
       - .:/var/www
     command: -q
+
+  apache:
+    build: docker/apache
+    working_dir: /var/www/
+    environment:
+      - APACHE_RUN_USER=www-data
+      - APACHE_RUN_GROUP=www-data
+      - APACHE_PID_FILE=/var/run/apache2/apache2.pid
+      - APACHE_RUN_DIR=/var/run/apache2
+      - APACHE_LOCK_DIR=/var/lock/apache2
+      - APACHE_LOG_DIR=/var/log/apache2
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      game_of_life_hexagonal-network:
+        aliases:
+          - apache
+    volumes:
+      - .:/var/www
+    tty: true
