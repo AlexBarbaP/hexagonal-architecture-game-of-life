@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Infrastructure\Doctrine\Domain\Model\Entities;
+namespace App\Infrastructure\Doctrine\Domain\Model\Entities;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\GuidType;
-use Domain\Model\Entities\SimulationStatusId;
+use App\Domain\Model\Entities\SimulationStatusId;
 
 class DoctrineSimulationStatusId extends GuidType
 {

@@ -47,7 +47,7 @@ class SimulationIntegrationTest extends IntegrationTestAbstract
     /**
      * @test
      *
-     * @expectedException Domain\Exception\InvalidSizeException
+     * @expectedException App\Domain\Exception\InvalidSizeException
      */
     public function run_simulation_should_output_a_message_error_for_invalid_board_dimensions()
     {

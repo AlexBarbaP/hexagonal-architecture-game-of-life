@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Domain\Model;
+namespace App\Domain\Model;
 
-use Domain\Exception\InvalidCellStatusEnumException;
+use App\Domain\Exception\InvalidCellStatusEnumException;
 
 final class CellStatus
 {

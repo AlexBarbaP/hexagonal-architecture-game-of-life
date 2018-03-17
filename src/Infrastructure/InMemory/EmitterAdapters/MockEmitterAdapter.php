@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Infrastructure\InMemory\EmitterAdapters;
+namespace App\Infrastructure\InMemory\EmitterAdapters;
 
 use League\Event\EmitterInterface;
 use League\Event\GeneratorInterface;

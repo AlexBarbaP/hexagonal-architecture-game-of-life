@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Application;
 
 use Application\Exceptions\InvalidInputException;
-use Domain\Model\Size;
+use App\Domain\Model\Size;
 
 class InputValidator implements ValidatorInterface
 {

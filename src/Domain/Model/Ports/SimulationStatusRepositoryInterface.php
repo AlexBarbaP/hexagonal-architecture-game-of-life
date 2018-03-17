@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Domain\Model\Ports;
+namespace App\Domain\Model\Ports;
 
-use Domain\Exception\EntityNotFoundException;
-use Domain\Model\Entities\SimulationStatus;
-use Domain\Model\Entities\SimulationStatusId;
+use App\Domain\Exception\EntityNotFoundException;
+use App\Domain\Model\Entities\SimulationStatus;
+use App\Domain\Model\Entities\SimulationStatusId;
 
 interface SimulationStatusRepositoryInterface
 {

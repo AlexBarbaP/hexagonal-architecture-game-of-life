@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Domain\Model;
+namespace App\Domain\Model;
 
-use Domain\Exception\InvalidSizeException;
-use Domain\Model\PopulateStrategies\PopulateStrategyInterface;
+use App\Domain\Exception\InvalidSizeException;
+use App\Domain\Model\PopulateStrategies\PopulateStrategyInterface;
 
 final class Board
 {

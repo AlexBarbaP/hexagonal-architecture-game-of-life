@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace Application\CommandHandlers\Simulation;
+namespace App\Application\CommandHandlers\Simulation;
 
-use Domain\Model\Commands\Simulation\IterateSimulationCommand;
-use Domain\Model\Ports\SimulationStatusRepositoryInterface;
-use Domain\Model\Ports\SimulationStatusStoreInterface;
-use Domain\Model\Simulation;
+use App\Domain\Model\Commands\Simulation\IterateSimulationCommand;
+use App\Domain\Model\Ports\SimulationStatusRepositoryInterface;
+use App\Domain\Model\Ports\SimulationStatusStoreInterface;
+use App\Domain\Model\Simulation;
 
 class IterateSimulationCommandHandler
 {

@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Infrastructure\InMemory\StoreInterfaceAdapters;
+namespace App\Infrastructure\InMemory\StoreInterfaceAdapters;
 
-use Domain\Model\Entities\SimulationStatus;
-use Domain\Model\Ports\SimulationStatusStoreInterface;
+use App\Domain\Model\Entities\SimulationStatus;
+use App\Domain\Model\Ports\SimulationStatusStoreInterface;
 
 class InMemorySimulationStatusStoreAdapter implements SimulationStatusStoreInterface
 {

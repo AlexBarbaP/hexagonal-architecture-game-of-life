@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace Infrastructure\Doctrine\RepositoryInterfaceAdapters;
+namespace App\Infrastructure\Doctrine\RepositoryInterfaceAdapters;
 
 use Doctrine\ORM\EntityManager;
-use Domain\Exception\EntityNotFoundException;
-use Domain\Model\Entities\SimulationStatus;
-use Domain\Model\Entities\SimulationStatusId;
-use Domain\Model\Ports\SimulationStatusRepositoryInterface;
+use App\Domain\Exception\EntityNotFoundException;
+use App\Domain\Model\Entities\SimulationStatus;
+use App\Domain\Model\Entities\SimulationStatusId;
+use App\Domain\Model\Ports\SimulationStatusRepositoryInterface;
 
 class DoctrineSimulationStatusRepositoryAdapter implements SimulationStatusRepositoryInterface
 {

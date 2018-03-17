@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Application;
 
-use Domain\Model\Size;
+use App\Domain\Model\Size;
 
 interface InputParserInterface
 {

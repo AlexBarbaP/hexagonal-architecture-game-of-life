@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Infrastructure\Doctrine;
+namespace App\Infrastructure\Doctrine;
 
 use Doctrine\Common\Cache\ArrayCache;
 use Doctrine\DBAL\DBALException;
@@ -9,7 +9,7 @@ use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Tools\Setup;
-use Infrastructure\Doctrine\Domain\Model\Entities\DoctrineSimulationStatusId;
+use App\Infrastructure\Doctrine\Domain\Model\Entities\DoctrineSimulationStatusId;
 
 class DoctrineEntityManagerFactory
 {

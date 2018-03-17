@@ -3,12 +3,12 @@ declare(strict_types=1);
 
 namespace Tests\Domain\Model;
 
-use Domain\Model\Cell;
-use Domain\Model\Coordinate;
-use Domain\Model\PopulateStrategies\FixedPopulateStrategy;
-use Domain\Model\Simulation;
-use Domain\Model\Size;
-use Infrastructure\InMemory\EmitterAdapters\MockEmitterAdapter;
+use App\Domain\Model\Cell;
+use App\Domain\Model\Coordinate;
+use App\Domain\Model\PopulateStrategies\FixedPopulateStrategy;
+use App\Domain\Model\Simulation;
+use App\Domain\Model\Size;
+use App\Infrastructure\InMemory\EmitterAdapters\MockEmitterAdapter;
 use PHPUnit\Framework\TestCase;
 
 class SimulationTest extends TestCase

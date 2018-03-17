@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace Tests\Domain\Model;
 
-use Domain\Model\Board;
-use Domain\Model\PopulateStrategies\FixedPopulateStrategy;
-use Domain\Model\Size;
+use App\Domain\Model\Board;
+use App\Domain\Model\PopulateStrategies\FixedPopulateStrategy;
+use App\Domain\Model\Size;
 use PHPUnit\Framework\TestCase;
 
 class BoardTest extends TestCase

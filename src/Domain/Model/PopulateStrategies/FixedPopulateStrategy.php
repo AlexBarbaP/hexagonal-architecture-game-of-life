@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace Domain\Model\PopulateStrategies;
+namespace App\Domain\Model\PopulateStrategies;
 
-use Domain\Exception\InvalidGridException;
-use Domain\Exception\InvalidSizeException;
-use Domain\Model\Cell;
-use Domain\Model\CellStatus;
-use Domain\Model\Coordinate;
+use App\Domain\Exception\InvalidGridException;
+use App\Domain\Exception\InvalidSizeException;
+use App\Domain\Model\Cell;
+use App\Domain\Model\CellStatus;
+use App\Domain\Model\Coordinate;
 
 final class FixedPopulateStrategy implements PopulateStrategyInterface
 {

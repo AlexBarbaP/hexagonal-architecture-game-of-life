@@ -1,15 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace Domain\Model\PopulateStrategies;
+namespace App\Domain\Model\PopulateStrategies;
 
-use Domain\Exception\EntityNotFoundException;
-use Domain\Exception\InvalidSizeException;
-use Domain\Model\Cell;
-use Domain\Model\CellStatus;
-use Domain\Model\Coordinate;
-use Domain\Model\Entities\SimulationStatusId;
-use Domain\Model\Ports\SimulationStatusRepositoryInterface;
+use App\Domain\Exception\EntityNotFoundException;
+use App\Domain\Exception\InvalidSizeException;
+use App\Domain\Model\Cell;
+use App\Domain\Model\CellStatus;
+use App\Domain\Model\Coordinate;
+use App\Domain\Model\Entities\SimulationStatusId;
+use App\Domain\Model\Ports\SimulationStatusRepositoryInterface;
 
 final class FromStoragePopulateStrategy implements PopulateStrategyInterface
 {

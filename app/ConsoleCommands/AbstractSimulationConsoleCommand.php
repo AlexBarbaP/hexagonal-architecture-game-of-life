@@ -5,11 +5,11 @@ namespace Application\ConsoleCommands;
 
 use Application\Application;
 use Application\Config\Config;
-use Domain\Model\Ports\SimulationStatusRepositoryInterface;
-use Domain\Model\Ports\SimulationStatusStoreInterface;
-use Infrastructure\Doctrine\DoctrineEntityManagerFactory;
-use Infrastructure\Doctrine\RepositoryInterfaceAdapters\DoctrineSimulationStatusRepositoryAdapter;
-use Infrastructure\Doctrine\StoreInterfaceAdapters\DoctrineSimulationStatusStoreAdapter;
+use App\Domain\Model\Ports\SimulationStatusRepositoryInterface;
+use App\Domain\Model\Ports\SimulationStatusStoreInterface;
+use App\Infrastructure\Doctrine\DoctrineEntityManagerFactory;
+use App\Infrastructure\Doctrine\RepositoryInterfaceAdapters\DoctrineSimulationStatusRepositoryAdapter;
+use App\Infrastructure\Doctrine\StoreInterfaceAdapters\DoctrineSimulationStatusStoreAdapter;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;

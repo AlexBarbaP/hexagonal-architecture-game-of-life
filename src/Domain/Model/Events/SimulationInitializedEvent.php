@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Domain\Model\Events;
+namespace App\Domain\Model\Events;
 
-use Domain\Model\Board;
+use App\Domain\Model\Board;
 
 final class SimulationInitializedEvent extends EventAbstract
 {

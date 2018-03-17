@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace Application\Factories;
 
-use Application\EventListeners\Simulation\SimulationInitializedEventListener;
-use Domain\Model\Ports\SimulationStatusStoreInterface;
+use App\Application\EventListeners\Simulation\SimulationInitializedEventListener;
+use App\Domain\Model\Ports\SimulationStatusStoreInterface;
 use League\Event\Emitter;
 use League\Event\EmitterInterface;
 

@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Domain\Model\Queries\Simulation;
+namespace App\Domain\Model\Queries\Simulation;
 
-use Domain\Model\Simulation;
+use App\Domain\Model\Simulation;
 
 class SimulationStatusQuery
 {

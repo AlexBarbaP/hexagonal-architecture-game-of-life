@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Domain\Model\Entities;
+namespace App\Domain\Model\Entities;
 
 use Ramsey\Uuid\Uuid;
 

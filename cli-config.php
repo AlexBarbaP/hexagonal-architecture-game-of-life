@@ -2,7 +2,7 @@
 
 use Application\Config\Config;
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
-use Infrastructure\Doctrine\DoctrineEntityManagerFactory;
+use App\Infrastructure\Doctrine\DoctrineEntityManagerFactory;
 
 require_once 'vendor/autoload.php';
 

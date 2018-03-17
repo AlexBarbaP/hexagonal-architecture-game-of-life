@@ -1,15 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace Domain\Model;
+namespace App\Domain\Model;
 
-use Domain\Model\Events\SimulationInitializedEvent;
-use Domain\Model\PopulateStrategies\FixedPopulateStrategy;
-use Domain\Model\PopulateStrategies\PopulateStrategyInterface;
-use Domain\Model\Rules\DeadSimulationRule;
-use Domain\Model\Rules\PopulateSimulationRule;
-use Domain\Model\Rules\RuleInterface;
-use Domain\Model\Rules\SurvivalSimulationRule;
+use App\Domain\Model\Events\SimulationInitializedEvent;
+use App\Domain\Model\PopulateStrategies\FixedPopulateStrategy;
+use App\Domain\Model\PopulateStrategies\PopulateStrategyInterface;
+use App\Domain\Model\Rules\DeadSimulationRule;
+use App\Domain\Model\Rules\PopulateSimulationRule;
+use App\Domain\Model\Rules\RuleInterface;
+use App\Domain\Model\Rules\SurvivalSimulationRule;
 use League\Event\EmitterInterface;
 use Ramsey\Uuid\Uuid;
 

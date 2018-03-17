@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Application;
 
-use Domain\Model\Board;
+use App\Domain\Model\Board;
 
 class OutputParser implements OutputParserInterface
 {

@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Domain\Model\Ports;
+namespace App\Domain\Model\Ports;
 
-use Domain\Model\Entities\SimulationStatus;
+use App\Domain\Model\Entities\SimulationStatus;
 
 interface SimulationStatusStoreInterface
 {

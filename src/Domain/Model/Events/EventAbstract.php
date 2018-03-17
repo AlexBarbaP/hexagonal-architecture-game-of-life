@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Domain\Model\Events;
+namespace App\Domain\Model\Events;
 
 use League\Event\EmitterInterface;
 use League\Event\EventInterface;

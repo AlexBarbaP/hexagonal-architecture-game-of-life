@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace Application\QueryHandlers\Simulation;
+namespace App\Application\QueryHandlers\Simulation;
 
-use Domain\Model\Board;
-use Domain\Model\Ports\SimulationStatusRepositoryInterface;
-use Domain\Model\Ports\SimulationStatusStoreInterface;
-use Domain\Model\Queries\Simulation\SimulationStatusQuery;
+use App\Domain\Model\Board;
+use App\Domain\Model\Ports\SimulationStatusRepositoryInterface;
+use App\Domain\Model\Ports\SimulationStatusStoreInterface;
+use App\Domain\Model\Queries\Simulation\SimulationStatusQuery;
 
 class SimulationStatusQueryHandler
 {

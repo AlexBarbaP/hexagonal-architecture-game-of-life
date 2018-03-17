@@ -5,8 +5,8 @@ namespace Tests\Integration\Fixtures;
 
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Domain\Model\Entities\SimulationStatus;
-use Domain\Model\Entities\SimulationStatusId;
+use App\Domain\Model\Entities\SimulationStatus;
+use App\Domain\Model\Entities\SimulationStatusId;
 
 class DoctrineSimulationStatusFixtureLoader implements FixtureInterface
 {

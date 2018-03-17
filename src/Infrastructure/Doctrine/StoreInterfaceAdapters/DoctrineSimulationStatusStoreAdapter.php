@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Infrastructure\Doctrine\StoreInterfaceAdapters;
+namespace App\Infrastructure\Doctrine\StoreInterfaceAdapters;
 
 use Doctrine\ORM\EntityManager;
-use Domain\Model\Entities\SimulationStatus;
-use Domain\Model\Ports\SimulationStatusStoreInterface;
+use App\Domain\Model\Entities\SimulationStatus;
+use App\Domain\Model\Ports\SimulationStatusStoreInterface;
 
 class DoctrineSimulationStatusStoreAdapter implements SimulationStatusStoreInterface
 {

@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace Tests\Domain\Model\PopulateStrategies;
 
-use Domain\Model\Cell;
-use Domain\Model\CellStatus;
-use Domain\Model\Coordinate;
-use Domain\Model\PopulateStrategies\RandomPopulateStrategy;
+use App\Domain\Model\Cell;
+use App\Domain\Model\CellStatus;
+use App\Domain\Model\Coordinate;
+use App\Domain\Model\PopulateStrategies\RandomPopulateStrategy;
 use PHPUnit\Framework\TestCase;
 
 class RandomPopulateStrategyTest extends TestCase

@@ -7,7 +7,7 @@ use Application\Application;
 use Application\InputParser;
 use Application\InputValidator;
 use Application\OutputParser;
-use Domain\Model\Entities\SimulationStatusId;
+use App\Domain\Model\Entities\SimulationStatusId;
 use Exception;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;

@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Domain\Model\Rules;
+namespace App\Domain\Model\Rules;
 
-use Domain\Model\CellStatus;
+use App\Domain\Model\CellStatus;
 
 interface RuleInterface
 {

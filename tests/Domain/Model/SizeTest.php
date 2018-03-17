@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Tests\Domain\Model;
 
-use Domain\Model\Size;
+use App\Domain\Model\Size;
 use PHPUnit\Framework\TestCase;
 
 class SizeTest extends TestCase
@@ -11,7 +11,7 @@ class SizeTest extends TestCase
     /**
      * @test
      *
-     * @expectedException Domain\Exception\InvalidSizeException
+     * @expectedException App\Domain\Exception\InvalidSizeException
      */
     public function size_should_throw_exception_for_invalid_size()
     {

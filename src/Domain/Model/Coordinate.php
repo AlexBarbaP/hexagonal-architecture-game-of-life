@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Domain\Model;
+namespace App\Domain\Model;
 
-use Domain\Exception\InvalidCoordinateException;
+use App\Domain\Exception\InvalidCoordinateException;
 
 final class Coordinate
 {

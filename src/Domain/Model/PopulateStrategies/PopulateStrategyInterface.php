@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Domain\Model\PopulateStrategies;
+namespace App\Domain\Model\PopulateStrategies;
 
-use Domain\Model\Cell;
+use App\Domain\Model\Cell;
 
 interface PopulateStrategyInterface
 {

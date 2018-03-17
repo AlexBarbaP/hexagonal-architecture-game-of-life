@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Domain\Model\Commands\Simulation;
+namespace App\Domain\Model\Commands\Simulation;
 
-use Domain\Model\Simulation;
+use App\Domain\Model\Simulation;
 
 class IterateSimulationCommand
 {

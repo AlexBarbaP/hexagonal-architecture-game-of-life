@@ -3,13 +3,13 @@ declare(strict_types=1);
 
 namespace Tests\Domain\Model\PopulateStrategies;
 
-use Domain\Model\Cell;
-use Domain\Model\CellStatus;
-use Domain\Model\Coordinate;
-use Domain\Model\Entities\SimulationStatus;
-use Domain\Model\Entities\SimulationStatusId;
-use Domain\Model\PopulateStrategies\FromStoragePopulateStrategy;
-use Infrastructure\InMemory\RepositoryInterfaceAdapters\InMemorySimulationStatusRepositoryAdapter;
+use App\Domain\Model\Cell;
+use App\Domain\Model\CellStatus;
+use App\Domain\Model\Coordinate;
+use App\Domain\Model\Entities\SimulationStatus;
+use App\Domain\Model\Entities\SimulationStatusId;
+use App\Domain\Model\PopulateStrategies\FromStoragePopulateStrategy;
+use App\Infrastructure\InMemory\RepositoryInterfaceAdapters\InMemorySimulationStatusRepositoryAdapter;
 use PHPUnit\Framework\TestCase;
 
 class FromStoragePopulateStrategyTest extends TestCase
@@ -46,7 +46,7 @@ class FromStoragePopulateStrategyTest extends TestCase
     /**
      * @test
      *
-     * @expectedException Domain\Exception\InvalidSizeException
+     * @expectedException App\Domain\Exception\InvalidSizeException
      */
     public function fixed_populate_strategy_should_throw_exception_for_one_dimension_array()
     {

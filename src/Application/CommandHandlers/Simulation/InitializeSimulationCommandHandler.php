@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace Application\CommandHandlers\Simulation;
+namespace App\Application\CommandHandlers\Simulation;
 
-use Domain\Model\Commands\Simulation\InitializeSimulationCommand;
-use Domain\Model\Ports\SimulationStatusRepositoryInterface;
-use Domain\Model\Ports\SimulationStatusStoreInterface;
-use Domain\Model\Simulation;
-use Domain\Model\Size;
+use App\Domain\Model\Commands\Simulation\InitializeSimulationCommand;
+use App\Domain\Model\Ports\SimulationStatusRepositoryInterface;
+use App\Domain\Model\Ports\SimulationStatusStoreInterface;
+use App\Domain\Model\Simulation;
+use App\Domain\Model\Size;
 use League\Event\EmitterInterface;
 
 class InitializeSimulationCommandHandler
