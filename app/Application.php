@@ -3,9 +3,6 @@ declare(strict_types=1);
 
 namespace Application;
 
-use Application\Exceptions\InvalidInputException;
-use Application\Factories\CommandBusFactory;
-use Application\Factories\EventBusFactory;
 use App\Domain\Exception\EntityNotFoundException;
 use App\Domain\Model\Board;
 use App\Domain\Model\Commands\Simulation\InitializeSimulationCommand;
@@ -18,6 +15,9 @@ use App\Domain\Model\Ports\SimulationStatusStoreInterface;
 use App\Domain\Model\Queries\Simulation\SimulationStatusQuery;
 use App\Domain\Model\Simulation;
 use App\Domain\Model\Size;
+use Application\Exceptions\InvalidInputException;
+use Application\Factories\CommandBusFactory;
+use Application\Factories\EventBusFactory;
 use League\Event\EmitterInterface;
 use League\Tactician\CommandBus;
 use PHPUnit\Runner\Exception;
@@ -59,12 +59,12 @@ class Application
 
     /**
      * @param SimulationStatusRepositoryInterface $simulationStatusRepository
-     * @param SimulationStatusStoreInterface      $simulationStatusStore
-     * @param InputParserInterface                $inputParser
-     * @param OutputParserInterface               $outputParser
-     * @param ValidatorInterface                  $inputValidator
-     * @param int                                 $iterations
-     * @param SimulationStatusId                  $simulationStatusId
+     * @param SimulationStatusStoreInterface $simulationStatusStore
+     * @param InputParserInterface $inputParser
+     * @param OutputParserInterface $outputParser
+     * @param ValidatorInterface $inputValidator
+     * @param int $iterations
+     * @param SimulationStatusId $simulationStatusId
      */
     public function __construct(
         SimulationStatusRepositoryInterface $simulationStatusRepository,
@@ -77,14 +77,42 @@ class Application
     ) {
         $this->simulationStatusRepository = $simulationStatusRepository;
         $this->simulationStatusStore      = $simulationStatusStore;
-        $this->inputParser          = $inputParser;
-        $this->outputParser         = $outputParser;
-        $this->inputValidator       = $inputValidator;
-        $this->iterations           = $iterations;
+        $this->inputParser                = $inputParser;
+        $this->outputParser               = $outputParser;
+        $this->inputValidator             = $inputValidator;
+        $this->iterations                 = $iterations;
         $this->simulationStatusId         = $simulationStatusId;
 
         $this->eventBus   = $this->getEventBus();
         $this->commandBus = $this->getCommandBus();
+    }
+
+    /**
+     * @return EmitterInterface
+     */
+    private function getEventBus(): EmitterInterface
+    {
+        $eventBusFactory = new EventBusFactory($this->simulationStatusStore);
+
+        $eventBus = $eventBusFactory->create();
+
+        return $eventBus;
+    }
+
+    /**
+     * @return CommandBus
+     */
+    private function getCommandBus(): CommandBus
+    {
+        $commandBusFactory = new CommandBusFactory(
+            $this->simulationStatusRepository,
+            $this->simulationStatusStore,
+            $this->eventBus
+        );
+
+        $commandBus = $commandBusFactory->create();
+
+        return $commandBus;
     }
 
     /**
@@ -98,7 +126,7 @@ class Application
         try {
             $input = [
                 'height' => $height,
-                'width'  => $width,
+                'width' => $width,
             ];
 
             $this->inputValidator->validate($input);
@@ -109,6 +137,30 @@ class Application
         } catch (InvalidInputException $e) {
             throw new Exception('Invalid input exception.');
         }
+    }
+
+    /**
+     * @param Size $size
+     * @return Simulation
+     *
+     * @throws EntityNotFoundException
+     */
+    private function initializeSimulation(Size $size): Simulation
+    {
+        if (is_null($this->simulationStatusId)) {
+            $populateStrategy = new RandomPopulateStrategy();
+        } else {
+            $gridStatus      = $this->simulationStatusRepository->find($this->simulationStatusId);
+            $gridStatusArray = unserialize($gridStatus->getStatus());
+
+            $populateStrategy = new FixedPopulateStrategy($gridStatusArray);
+        }
+
+        $initializeSimulationCommand = new InitializeSimulationCommand($size->getHeight(), $size->getWidth(), $populateStrategy);
+
+        $simulation = $this->commandBus->handle($initializeSimulationCommand);
+
+        return $simulation;
     }
 
     /**
@@ -154,57 +206,5 @@ class Application
         $simulationBoardGrid = $this->outputParser->parse($board);
 
         return $simulationBoardGrid;
-    }
-
-    /**
-     * @return EmitterInterface
-     */
-    private function getEventBus(): EmitterInterface
-    {
-        $eventBusFactory = new EventBusFactory($this->simulationStatusStore);
-
-        $eventBus = $eventBusFactory->create();
-
-        return $eventBus;
-    }
-
-    /**
-     * @return CommandBus
-     */
-    private function getCommandBus(): CommandBus
-    {
-        $commandBusFactory = new CommandBusFactory(
-            $this->simulationStatusRepository,
-            $this->simulationStatusStore,
-            $this->eventBus
-        );
-
-        $commandBus = $commandBusFactory->create();
-
-        return $commandBus;
-    }
-
-    /**
-     * @param Size $size
-     * @return Simulation
-     *
-     * @throws EntityNotFoundException
-     */
-    private function initializeSimulation(Size $size): Simulation
-    {
-        if (is_null($this->simulationStatusId)) {
-            $populateStrategy = new RandomPopulateStrategy();
-        } else {
-            $gridStatus      = $this->simulationStatusRepository->find($this->simulationStatusId);
-            $gridStatusArray = unserialize($gridStatus->getStatus());
-
-            $populateStrategy = new FixedPopulateStrategy($gridStatusArray);
-        }
-
-        $initializeSimulationCommand = new InitializeSimulationCommand($size->getHeight(), $size->getWidth(), $populateStrategy);
-
-        $simulation = $this->commandBus->handle($initializeSimulationCommand);
-
-        return $simulation;
     }
 }

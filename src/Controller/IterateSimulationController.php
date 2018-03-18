@@ -10,7 +10,6 @@ use App\Domain\Model\PopulateStrategies\RandomPopulateStrategy;
 use App\Domain\Model\Ports\SimulationStatusRepositoryInterface;
 use App\Domain\Model\Ports\SimulationStatusStoreInterface;
 use App\Domain\Model\Simulation;
-use App\Infrastructure\Doctrine\DoctrineEntityManagerFactory;
 use App\Infrastructure\Doctrine\RepositoryInterfaceAdapters\DoctrineSimulationStatusRepositoryAdapter;
 use App\Infrastructure\Doctrine\StoreInterfaceAdapters\DoctrineSimulationStatusStoreAdapter;
 use Application\Config\Config;
@@ -18,7 +17,7 @@ use Application\Factories\CommandBusFactory;
 use Application\Factories\EventBusFactory;
 use League\Event\EmitterInterface;
 use League\Tactician\CommandBus;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -29,7 +28,7 @@ use Symfony\Component\Routing\Annotation\Route;
  *     requirements={"height"="\d+", "width"="\d+", "iterations"="\d+"}
  * )
  */
-class IterateSimulationController extends AbstractController
+class IterateSimulationController extends Controller
 {
     /** @var Config */
     protected $config;
@@ -46,11 +45,15 @@ class IterateSimulationController extends AbstractController
     /** @var EmitterInterface */
     private $eventBus;
 
-    public function __invoke(int $height, int $width, int $iterations, SessionInterface $session)
-    {
+    public function __invoke(
+        int $height,
+        int $width,
+        int $iterations,
+        SessionInterface $session
+    ) {
         $this->getConfig();
-        $this->getEntityManagers();
-        $this->getBuses();
+        $this->configurePersistenceAdapters();
+        $this->configureBuses();
 
         if (!$session->has('simulationStatus') || !$session->get('iterations')) {
             $populateStrategy = new RandomPopulateStrategy();
@@ -102,26 +105,16 @@ class IterateSimulationController extends AbstractController
         $this->config = Config::getConfig(Config::PROD_ENV);
     }
 
-    private function getEntityManagers(): void
+    private function configurePersistenceAdapters(): void
     {
-        $masterDoctrineEntityManagerFactory = new DoctrineEntityManagerFactory(
-            $this->config[Config::ENTITY_PATHS],
-            $this->config[Config::MASTER_DB_PARAMS]
-        );
-        $masterEntityManager                = $masterDoctrineEntityManagerFactory->getEntityManager();
-
+        $masterEntityManager = $this->getDoctrine()->getManager('master');
         $this->simulationStatusStore = new DoctrineSimulationStatusStoreAdapter($masterEntityManager);
 
-        $slaveDoctrineEntityManagerFactory = new DoctrineEntityManagerFactory(
-            $this->config[Config::ENTITY_PATHS],
-            $this->config[Config::SLAVE_DB_PARAMS]
-        );
-        $slaveEntityManager                = $slaveDoctrineEntityManagerFactory->getEntityManager();
-
+        $slaveEntityManager = $this->getDoctrine()->getManager('slave');
         $this->simulationStatusRepository = new DoctrineSimulationStatusRepositoryAdapter($slaveEntityManager);
     }
 
-    private function getBuses(): void
+    private function configureBuses(): void
     {
         $eventBusFactory = new EventBusFactory($this->simulationStatusStore);
         $this->eventBus  = $eventBusFactory->create();

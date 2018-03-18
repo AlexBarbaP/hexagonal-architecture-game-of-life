@@ -7,21 +7,44 @@ parameters:
 
 doctrine:
     dbal:
-        # configure these for your database server
-        driver: 'pdo_mysql'
-        server_version: '5.7'
-        charset: utf8mb4
+        default_connection: master
+        types:
+            SimulationStatusId:
+                class: App\Infrastructure\Doctrine\Domain\Model\Entities\DoctrineSimulationStatusId
+                commented: true
 
-        # With Symfony 3.3, remove the `resolve:` prefix
-        url: '%env(resolve:DATABASE_URL)%'
+        connections:
+            master:
+                url: '%env(resolve:MASTER_DATABASE_URL)%'
+                charset:  UTF8
+
+            slave:
+                url: '%env(resolve:SLAVE_DATABASE_URL)%'
+                charset:  UTF8
+
     orm:
         auto_generate_proxy_classes: '%kernel.debug%'
-        naming_strategy: doctrine.orm.naming_strategy.underscore
-        auto_mapping: true
-        mappings:
-            App:
-                is_bundle: false
-                type: xml
-                dir: '%kernel.project_dir%/src/Infrastructure/Doctrine/Domain/Model/Entities'
-                prefix: 'App\Domain\Model\Entities'
-                alias: App
+
+        default_entity_manager: master
+        entity_managers:
+            master:
+                connection: master
+                naming_strategy: doctrine.orm.naming_strategy.underscore
+                auto_mapping: true
+                mappings:
+                    App:
+                        is_bundle: false
+                        type: xml
+                        dir: '%kernel.project_dir%/src/Infrastructure/Doctrine/Domain/Model/Entities'
+                        prefix: 'App\Domain\Model\Entities'
+                        alias: App
+            slave:
+                connection: slave
+                naming_strategy: doctrine.orm.naming_strategy.underscore
+                mappings:
+                    App:
+                        is_bundle: false
+                        type: xml
+                        dir: '%kernel.project_dir%/src/Infrastructure/Doctrine/Domain/Model/Entities'
+                        prefix: 'App\Domain\Model\Entities'
+                        alias: App

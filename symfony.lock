@@ -89,6 +89,9 @@
     "myclabs/deep-copy": {
         "version": "1.x-dev"
     },
+    "nikic/php-parser": {
+        "version": "4.0-dev"
+    },
     "ocramius/package-versions": {
         "version": "1.3.0"
     },
