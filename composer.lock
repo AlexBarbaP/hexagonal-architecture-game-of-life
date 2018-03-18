@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "611f8631063c91559cfd259933793153",
+    "content-hash": "03446ccc5d92c7074af37405690a42a6",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -6966,11 +6966,12 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "symfony/lts": 20,
         "doctrine/orm": 20,
         "league/event": 20,
         "league/tactician": 20,
         "ramsey/uuid": 20,
+        "sensio/framework-extra-bundle": 20,
+        "symfony/lts": 20,
         "doctrine/data-fixtures": 20,
         "phpunit/phpunit": 20
     },

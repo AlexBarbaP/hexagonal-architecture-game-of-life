@@ -6,7 +6,12 @@
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        <div style="margin:auto;width:1000px">
+            <br>
+            <div style="font: 2em bold;text-align: center;">Game of Life Simulator</div>
+            <br>
+            {% block body %}{% endblock %}
+        </div>
         {% block javascripts %}{% endblock %}
     </body>
 </html>

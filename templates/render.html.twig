@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div style="border: 1px solid blue; display: table; margin: auto">
+    {% for row in grid %}
+        <div style="border: 1px solid blue; display: table-row">
+        {% for cell in row %}
+            <div style="border: 1px solid blue; display: table-cell; height: 16px; padding-top: 4px; text-align: center; width: 20px;">
+                {% if cell == '1' %}*{% else %}&nbsp;{% endif %}
+            </div>
+        {% endfor %}
+        </div>
+    {% endfor %}
+    </div>
+    <div id="simulation-status">Simulation in progress...</div>
+{% endblock %}
+{% block javascripts %}
+    <script type="application/javascript">
+        if ({{ iterate }}) {
+            setTimeout('location.reload()', 500);
+        } else {
+            document.getElementById('simulation-status').innerHTML = 'Simulation completed.';
+        }
+    </script>
+{% endblock %}
